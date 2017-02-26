@@ -23,6 +23,7 @@ namespace GyMaster
         public MainWindow()
         {
             InitializeComponent();
+            
         }
     }
 }
