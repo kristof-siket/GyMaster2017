@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GyMaster"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="GyMaster" Height="350" Width="525">
     <Grid>
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="307,186,0,0" VerticalAlignment="Top" Width="75"/>
+        <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial" FontSize="20" FontWeight="ExtraBold">Hello World!</Label>
 
     </Grid>
 </Window>
