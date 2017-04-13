@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Data;
 
 namespace GyMaster
 {
@@ -23,7 +24,8 @@ namespace GyMaster
         public MainWindow()
         {
             InitializeComponent();
-            
+            GyMasterDatabaseEntities ge = new GyMasterDatabaseEntities();
+            Console.WriteLine(ge.GYM.First().ADDRESS);
         }
     }
 }

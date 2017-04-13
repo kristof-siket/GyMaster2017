@@ -12,7 +12,7 @@ namespace Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Trainer : ATHLETE
+    public partial class TRAINER : ATHLETE
     {
         public Nullable<float> ERTEKELES { get; set; }
     }

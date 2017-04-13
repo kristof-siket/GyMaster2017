@@ -197,13 +197,12 @@
           <Property Name="FAV_EXERCISE" Type="Decimal" Precision="3" Scale="0" />
           <Property Name="GYM_ID" Type="Decimal" Precision="2" Scale="0" />
           <Property Name="IS_PUNISHED" Type="Boolean" />
-          <Property Name="DISCRIMINATOR" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="EXERCISE" Relationship="Self.ATHLETE_FAVEX" FromRole="ATHLETE" ToRole="EXERCISE" />
           <NavigationProperty Name="RESULT" Relationship="Self.ATHLETE_FK" FromRole="ATHLETE" ToRole="RESULT" />
           <NavigationProperty Name="GYM" Relationship="Self.ATHLETE_GYM" FromRole="ATHLETE" ToRole="GYM" />
           <NavigationProperty Name="TRAINING_PLAN" Relationship="Self.ATHLETE_TP_FK" FromRole="ATHLETE" ToRole="TRAINING_PLAN" />
           <NavigationProperty Name="ATHLETE1" Relationship="Self.EDZO_FK" FromRole="ATHLETE" ToRole="ATHLETE1" />
-          <NavigationProperty Name="ATHLETE2" Relationship="Self.EDZO_FK" FromRole="ATHLETE1" ToRole="ATHLETE" />
+          <NavigationProperty Name="Trainer" Relationship="Self.EDZO_FK" FromRole="ATHLETE1" ToRole="ATHLETE" />
           <NavigationProperty Name="GYM1" Relationship="Self.GYM_BOSS" FromRole="ATHLETE" ToRole="GYM" />
         </EntityType>
         <EntityType Name="EXERCISE">
@@ -225,7 +224,7 @@
           <Property Name="TEL" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
           <Property Name="BOSS_ID" Type="Decimal" Precision="4" Scale="0" />
           <NavigationProperty Name="ATHLETE" Relationship="Self.ATHLETE_GYM" FromRole="GYM" ToRole="ATHLETE" />
-          <NavigationProperty Name="ATHLETE1" Relationship="Self.GYM_BOSS" FromRole="GYM" ToRole="ATHLETE" />
+          <NavigationProperty Name="BOSS" Relationship="Self.GYM_BOSS" FromRole="GYM" ToRole="ATHLETE" />
         </EntityType>
         <EntityType Name="RESULT">
           <Key>
@@ -367,8 +366,8 @@
             <End Role="RESULT" EntitySet="RESULT" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Trainer" BaseType="GyMasterDatabaseModel.ATHLETE" >
-          <Property Name="ERTEKELES" Type="Single" Nullable="true" />
+        <EntityType Name="TRAINER" BaseType="GyMasterDatabaseModel.ATHLETE" >
+          <Property Name="ERTEKELES" Type="Single" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -380,7 +379,6 @@
             <EntityTypeMapping TypeName="IsTypeOf(GyMasterDatabaseModel.ATHLETE)">
               <MappingFragment StoreEntitySet="ATHLETE">
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="DISCRIMINATOR" ColumnName="DISCRIMINATOR" />
                 <ScalarProperty Name="IS_PUNISHED" ColumnName="IS_PUNISHED" />
                 <ScalarProperty Name="GYM_ID" ColumnName="GYM_ID" />
                 <ScalarProperty Name="FAV_EXERCISE" ColumnName="FAV_EXERCISE" />
@@ -393,7 +391,7 @@
                 <ScalarProperty Name="NAME" ColumnName="NAME" />
               </MappingFragment>
             </EntityTypeMapping>
-            <EntityTypeMapping TypeName="IsTypeOf(GyMasterDatabaseModel.Trainer)">
+            <EntityTypeMapping TypeName="IsTypeOf(GyMasterDatabaseModel.TRAINER)">
               <MappingFragment StoreEntitySet="ATHLETE">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ERTEKELES" ColumnName="ERTEKELES" />

@@ -28,6 +28,6 @@ namespace Data
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ATHLETE> ATHLETE { get; set; }
-        public virtual ATHLETE ATHLETE1 { get; set; }
+        public virtual ATHLETE BOSS { get; set; }
     }
 }

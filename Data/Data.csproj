@@ -69,7 +69,6 @@
     <Compile Include="ATHLETE.cs">
       <DependentUpon>GyMasterModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Class1.cs" />
     <Compile Include="EXERCISE.cs">
       <DependentUpon>GyMasterModel.tt</DependentUpon>
     </Compile>
@@ -95,7 +94,7 @@
     <Compile Include="RESULT.cs">
       <DependentUpon>GyMasterModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Trainer.cs">
+    <Compile Include="TRAINER.cs">
       <DependentUpon>GyMasterModel.tt</DependentUpon>
     </Compile>
     <Compile Include="TRAINING_PLAN.cs">
