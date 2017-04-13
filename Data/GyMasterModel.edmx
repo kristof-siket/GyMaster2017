@@ -1,0 +1,464 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="GyMasterDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ATHLETE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="numeric" Precision="4" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NAME" Type="nvarchar" MaxLength="30" />
+          <Property Name="BORN_IN" Type="nvarchar" MaxLength="50" />
+          <Property Name="BORN_DATE" Type="date" />
+          <Property Name="MEMBER_FROM" Type="date" />
+          <Property Name="HEIGHT" Type="numeric" Precision="3" Scale="0" />
+          <Property Name="WEIGHT" Type="numeric" Precision="3" Scale="0" />
+          <Property Name="TRAINER_ID" Type="numeric" Precision="4" Scale="0" />
+          <Property Name="FAV_EXERCISE" Type="numeric" Precision="3" Scale="0" />
+          <Property Name="GYM_ID" Type="numeric" Precision="2" Scale="0" />
+          <Property Name="IS_PUNISHED" Type="bit" />
+          <Property Name="DISCRIMINATOR" Type="nvarchar" MaxLength="50" />
+          <Property Name="ERTEKELES" Type="real" />
+        </EntityType>
+        <EntityType Name="EXERCISE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="numeric" Precision="3" Scale="0" Nullable="false" />
+          <Property Name="NAME" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="GYM">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="numeric" Precision="2" Scale="0" Nullable="false" />
+          <Property Name="NAME" Type="nvarchar" MaxLength="30" />
+          <Property Name="ADDRESS" Type="nvarchar" MaxLength="50" />
+          <Property Name="TEL" Type="varchar" MaxLength="16" />
+          <Property Name="BOSS_ID" Type="numeric" Precision="4" Scale="0" />
+        </EntityType>
+        <EntityType Name="RESULT">
+          <Key>
+            <PropertyRef Name="ATHLETE_ID" />
+            <PropertyRef Name="EX_ID" />
+          </Key>
+          <Property Name="ATHLETE_ID" Type="numeric" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="EX_ID" Type="numeric" Precision="3" Scale="0" Nullable="false" />
+          <Property Name="RES_KG" Type="numeric" Precision="3" Scale="0" />
+        </EntityType>
+        <EntityType Name="TRAINING_PLAN">
+          <Key>
+            <PropertyRef Name="ATHLETE_ID" />
+            <PropertyRef Name="RELEASE_DATE" />
+          </Key>
+          <Property Name="ATHLETE_ID" Type="numeric" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="RELEASE_DATE" Type="date" Nullable="false" />
+          <Property Name="FILENAME" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="ATHLETE_FAVEX">
+          <End Role="EXERCISE" Type="Self.EXERCISE" Multiplicity="0..1" />
+          <End Role="ATHLETE" Type="Self.ATHLETE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EXERCISE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ATHLETE">
+              <PropertyRef Name="FAV_EXERCISE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ATHLETE_FK">
+          <End Role="ATHLETE" Type="Self.ATHLETE" Multiplicity="1" />
+          <End Role="RESULT" Type="Self.RESULT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ATHLETE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RESULT">
+              <PropertyRef Name="ATHLETE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ATHLETE_GYM">
+          <End Role="GYM" Type="Self.GYM" Multiplicity="0..1" />
+          <End Role="ATHLETE" Type="Self.ATHLETE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GYM">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ATHLETE">
+              <PropertyRef Name="GYM_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ATHLETE_TP_FK">
+          <End Role="ATHLETE" Type="Self.ATHLETE" Multiplicity="1" />
+          <End Role="TRAINING_PLAN" Type="Self.TRAINING_PLAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ATHLETE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TRAINING_PLAN">
+              <PropertyRef Name="ATHLETE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EDZO_FK">
+          <End Role="ATHLETE" Type="Self.ATHLETE" Multiplicity="0..1" />
+          <End Role="ATHLETE1" Type="Self.ATHLETE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ATHLETE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ATHLETE1">
+              <PropertyRef Name="TRAINER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EXERCISE_FK">
+          <End Role="EXERCISE" Type="Self.EXERCISE" Multiplicity="1" />
+          <End Role="RESULT" Type="Self.RESULT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EXERCISE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RESULT">
+              <PropertyRef Name="EX_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="GYM_BOSS">
+          <End Role="ATHLETE" Type="Self.ATHLETE" Multiplicity="0..1" />
+          <End Role="GYM" Type="Self.GYM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ATHLETE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GYM">
+              <PropertyRef Name="BOSS_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GyMasterDatabaseModelStoreContainer">
+          <EntitySet Name="ATHLETE" EntityType="Self.ATHLETE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EXERCISE" EntityType="Self.EXERCISE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GYM" EntityType="Self.GYM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RESULT" EntityType="Self.RESULT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TRAINING_PLAN" EntityType="Self.TRAINING_PLAN" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="ATHLETE_FAVEX" Association="Self.ATHLETE_FAVEX">
+            <End Role="EXERCISE" EntitySet="EXERCISE" />
+            <End Role="ATHLETE" EntitySet="ATHLETE" />
+          </AssociationSet>
+          <AssociationSet Name="ATHLETE_FK" Association="Self.ATHLETE_FK">
+            <End Role="ATHLETE" EntitySet="ATHLETE" />
+            <End Role="RESULT" EntitySet="RESULT" />
+          </AssociationSet>
+          <AssociationSet Name="ATHLETE_GYM" Association="Self.ATHLETE_GYM">
+            <End Role="GYM" EntitySet="GYM" />
+            <End Role="ATHLETE" EntitySet="ATHLETE" />
+          </AssociationSet>
+          <AssociationSet Name="ATHLETE_TP_FK" Association="Self.ATHLETE_TP_FK">
+            <End Role="ATHLETE" EntitySet="ATHLETE" />
+            <End Role="TRAINING_PLAN" EntitySet="TRAINING_PLAN" />
+          </AssociationSet>
+          <AssociationSet Name="EDZO_FK" Association="Self.EDZO_FK">
+            <End Role="ATHLETE" EntitySet="ATHLETE" />
+            <End Role="ATHLETE1" EntitySet="ATHLETE" />
+          </AssociationSet>
+          <AssociationSet Name="EXERCISE_FK" Association="Self.EXERCISE_FK">
+            <End Role="EXERCISE" EntitySet="EXERCISE" />
+            <End Role="RESULT" EntitySet="RESULT" />
+          </AssociationSet>
+          <AssociationSet Name="GYM_BOSS" Association="Self.GYM_BOSS">
+            <End Role="ATHLETE" EntitySet="ATHLETE" />
+            <End Role="GYM" EntitySet="GYM" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GyMasterDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ATHLETE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Decimal" Precision="4" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="BORN_IN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BORN_DATE" Type="DateTime" Precision="0" />
+          <Property Name="MEMBER_FROM" Type="DateTime" Precision="0" />
+          <Property Name="HEIGHT" Type="Decimal" Precision="3" Scale="0" />
+          <Property Name="WEIGHT" Type="Decimal" Precision="3" Scale="0" />
+          <Property Name="TRAINER_ID" Type="Decimal" Precision="4" Scale="0" />
+          <Property Name="FAV_EXERCISE" Type="Decimal" Precision="3" Scale="0" />
+          <Property Name="GYM_ID" Type="Decimal" Precision="2" Scale="0" />
+          <Property Name="IS_PUNISHED" Type="Boolean" />
+          <Property Name="DISCRIMINATOR" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="EXERCISE" Relationship="Self.ATHLETE_FAVEX" FromRole="ATHLETE" ToRole="EXERCISE" />
+          <NavigationProperty Name="RESULT" Relationship="Self.ATHLETE_FK" FromRole="ATHLETE" ToRole="RESULT" />
+          <NavigationProperty Name="GYM" Relationship="Self.ATHLETE_GYM" FromRole="ATHLETE" ToRole="GYM" />
+          <NavigationProperty Name="TRAINING_PLAN" Relationship="Self.ATHLETE_TP_FK" FromRole="ATHLETE" ToRole="TRAINING_PLAN" />
+          <NavigationProperty Name="ATHLETE1" Relationship="Self.EDZO_FK" FromRole="ATHLETE" ToRole="ATHLETE1" />
+          <NavigationProperty Name="ATHLETE2" Relationship="Self.EDZO_FK" FromRole="ATHLETE1" ToRole="ATHLETE" />
+          <NavigationProperty Name="GYM1" Relationship="Self.GYM_BOSS" FromRole="ATHLETE" ToRole="GYM" />
+        </EntityType>
+        <EntityType Name="EXERCISE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Decimal" Precision="3" Scale="0" Nullable="false" />
+          <Property Name="NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ATHLETE" Relationship="Self.ATHLETE_FAVEX" FromRole="EXERCISE" ToRole="ATHLETE" />
+          <NavigationProperty Name="RESULT" Relationship="Self.EXERCISE_FK" FromRole="EXERCISE" ToRole="RESULT" />
+        </EntityType>
+        <EntityType Name="GYM">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Decimal" Precision="2" Scale="0" Nullable="false" />
+          <Property Name="NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="ADDRESS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TEL" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="BOSS_ID" Type="Decimal" Precision="4" Scale="0" />
+          <NavigationProperty Name="ATHLETE" Relationship="Self.ATHLETE_GYM" FromRole="GYM" ToRole="ATHLETE" />
+          <NavigationProperty Name="ATHLETE1" Relationship="Self.GYM_BOSS" FromRole="GYM" ToRole="ATHLETE" />
+        </EntityType>
+        <EntityType Name="RESULT">
+          <Key>
+            <PropertyRef Name="ATHLETE_ID" />
+            <PropertyRef Name="EX_ID" />
+          </Key>
+          <Property Name="ATHLETE_ID" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="EX_ID" Type="Decimal" Precision="3" Scale="0" Nullable="false" />
+          <Property Name="RES_KG" Type="Decimal" Precision="3" Scale="0" />
+          <NavigationProperty Name="ATHLETE" Relationship="Self.ATHLETE_FK" FromRole="RESULT" ToRole="ATHLETE" />
+          <NavigationProperty Name="EXERCISE" Relationship="Self.EXERCISE_FK" FromRole="RESULT" ToRole="EXERCISE" />
+        </EntityType>
+        <EntityType Name="TRAINING_PLAN">
+          <Key>
+            <PropertyRef Name="ATHLETE_ID" />
+            <PropertyRef Name="RELEASE_DATE" />
+          </Key>
+          <Property Name="ATHLETE_ID" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="RELEASE_DATE" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FILENAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ATHLETE" Relationship="Self.ATHLETE_TP_FK" FromRole="TRAINING_PLAN" ToRole="ATHLETE" />
+        </EntityType>
+        <Association Name="ATHLETE_FAVEX">
+          <End Role="EXERCISE" Type="Self.EXERCISE" Multiplicity="0..1" />
+          <End Role="ATHLETE" Type="Self.ATHLETE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EXERCISE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ATHLETE">
+              <PropertyRef Name="FAV_EXERCISE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ATHLETE_FK">
+          <End Role="ATHLETE" Type="Self.ATHLETE" Multiplicity="1" />
+          <End Role="RESULT" Type="Self.RESULT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ATHLETE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RESULT">
+              <PropertyRef Name="ATHLETE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ATHLETE_GYM">
+          <End Role="GYM" Type="Self.GYM" Multiplicity="0..1" />
+          <End Role="ATHLETE" Type="Self.ATHLETE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GYM">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ATHLETE">
+              <PropertyRef Name="GYM_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ATHLETE_TP_FK">
+          <End Role="ATHLETE" Type="Self.ATHLETE" Multiplicity="1" />
+          <End Role="TRAINING_PLAN" Type="Self.TRAINING_PLAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ATHLETE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TRAINING_PLAN">
+              <PropertyRef Name="ATHLETE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EDZO_FK">
+          <End Role="ATHLETE" Type="Self.ATHLETE" Multiplicity="0..1" />
+          <End Role="ATHLETE1" Type="Self.ATHLETE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ATHLETE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ATHLETE1">
+              <PropertyRef Name="TRAINER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="GYM_BOSS">
+          <End Role="ATHLETE" Type="Self.ATHLETE" Multiplicity="0..1" />
+          <End Role="GYM" Type="Self.GYM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ATHLETE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GYM">
+              <PropertyRef Name="BOSS_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EXERCISE_FK">
+          <End Role="EXERCISE" Type="Self.EXERCISE" Multiplicity="1" />
+          <End Role="RESULT" Type="Self.RESULT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EXERCISE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RESULT">
+              <PropertyRef Name="EX_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GyMasterDatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ATHLETE" EntityType="Self.ATHLETE" />
+          <EntitySet Name="EXERCISE" EntityType="Self.EXERCISE" />
+          <EntitySet Name="GYM" EntityType="Self.GYM" />
+          <EntitySet Name="RESULT" EntityType="Self.RESULT" />
+          <EntitySet Name="TRAINING_PLAN" EntityType="Self.TRAINING_PLAN" />
+          <AssociationSet Name="ATHLETE_FAVEX" Association="Self.ATHLETE_FAVEX">
+            <End Role="EXERCISE" EntitySet="EXERCISE" />
+            <End Role="ATHLETE" EntitySet="ATHLETE" />
+          </AssociationSet>
+          <AssociationSet Name="ATHLETE_FK" Association="Self.ATHLETE_FK">
+            <End Role="ATHLETE" EntitySet="ATHLETE" />
+            <End Role="RESULT" EntitySet="RESULT" />
+          </AssociationSet>
+          <AssociationSet Name="ATHLETE_GYM" Association="Self.ATHLETE_GYM">
+            <End Role="GYM" EntitySet="GYM" />
+            <End Role="ATHLETE" EntitySet="ATHLETE" />
+          </AssociationSet>
+          <AssociationSet Name="ATHLETE_TP_FK" Association="Self.ATHLETE_TP_FK">
+            <End Role="ATHLETE" EntitySet="ATHLETE" />
+            <End Role="TRAINING_PLAN" EntitySet="TRAINING_PLAN" />
+          </AssociationSet>
+          <AssociationSet Name="EDZO_FK" Association="Self.EDZO_FK">
+            <End Role="ATHLETE" EntitySet="ATHLETE" />
+            <End Role="ATHLETE1" EntitySet="ATHLETE" />
+          </AssociationSet>
+          <AssociationSet Name="GYM_BOSS" Association="Self.GYM_BOSS">
+            <End Role="ATHLETE" EntitySet="ATHLETE" />
+            <End Role="GYM" EntitySet="GYM" />
+          </AssociationSet>
+          <AssociationSet Name="EXERCISE_FK" Association="Self.EXERCISE_FK">
+            <End Role="EXERCISE" EntitySet="EXERCISE" />
+            <End Role="RESULT" EntitySet="RESULT" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Trainer" BaseType="GyMasterDatabaseModel.ATHLETE" >
+          <Property Name="ERTEKELES" Type="Single" Nullable="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GyMasterDatabaseModelStoreContainer" CdmEntityContainer="GyMasterDatabaseEntities">
+          <EntitySetMapping Name="ATHLETE">
+            <EntityTypeMapping TypeName="IsTypeOf(GyMasterDatabaseModel.ATHLETE)">
+              <MappingFragment StoreEntitySet="ATHLETE">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DISCRIMINATOR" ColumnName="DISCRIMINATOR" />
+                <ScalarProperty Name="IS_PUNISHED" ColumnName="IS_PUNISHED" />
+                <ScalarProperty Name="GYM_ID" ColumnName="GYM_ID" />
+                <ScalarProperty Name="FAV_EXERCISE" ColumnName="FAV_EXERCISE" />
+                <ScalarProperty Name="TRAINER_ID" ColumnName="TRAINER_ID" />
+                <ScalarProperty Name="WEIGHT" ColumnName="WEIGHT" />
+                <ScalarProperty Name="HEIGHT" ColumnName="HEIGHT" />
+                <ScalarProperty Name="MEMBER_FROM" ColumnName="MEMBER_FROM" />
+                <ScalarProperty Name="BORN_DATE" ColumnName="BORN_DATE" />
+                <ScalarProperty Name="BORN_IN" ColumnName="BORN_IN" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(GyMasterDatabaseModel.Trainer)">
+              <MappingFragment StoreEntitySet="ATHLETE">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ERTEKELES" ColumnName="ERTEKELES" />
+                <Condition ColumnName="DISCRIMINATOR" Value="Trainer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EXERCISE">
+            <EntityTypeMapping TypeName="GyMasterDatabaseModel.EXERCISE">
+              <MappingFragment StoreEntitySet="EXERCISE">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GYM">
+            <EntityTypeMapping TypeName="GyMasterDatabaseModel.GYM">
+              <MappingFragment StoreEntitySet="GYM">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
+                <ScalarProperty Name="TEL" ColumnName="TEL" />
+                <ScalarProperty Name="BOSS_ID" ColumnName="BOSS_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RESULT">
+            <EntityTypeMapping TypeName="GyMasterDatabaseModel.RESULT">
+              <MappingFragment StoreEntitySet="RESULT">
+                <ScalarProperty Name="ATHLETE_ID" ColumnName="ATHLETE_ID" />
+                <ScalarProperty Name="EX_ID" ColumnName="EX_ID" />
+                <ScalarProperty Name="RES_KG" ColumnName="RES_KG" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TRAINING_PLAN">
+            <EntityTypeMapping TypeName="GyMasterDatabaseModel.TRAINING_PLAN">
+              <MappingFragment StoreEntitySet="TRAINING_PLAN">
+                <ScalarProperty Name="ATHLETE_ID" ColumnName="ATHLETE_ID" />
+                <ScalarProperty Name="RELEASE_DATE" ColumnName="RELEASE_DATE" />
+                <ScalarProperty Name="FILENAME" ColumnName="FILENAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

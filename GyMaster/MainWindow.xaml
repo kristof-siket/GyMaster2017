@@ -8,6 +8,5 @@
         Title="GyMaster" Height="350" Width="525">
     <Grid>
         <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial" FontSize="20" FontWeight="ExtraBold">Hello World!</Label>
-
     </Grid>
 </Window>
