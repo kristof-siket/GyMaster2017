@@ -24,8 +24,9 @@ namespace GyMaster
         public MainWindow()
         {
             InitializeComponent();
-            GyMasterDatabaseEntities ge = new GyMasterDatabaseEntities();
-            Console.WriteLine(ge.GYM.First().ADDRESS);
+            //GyMasterDatabaseEntities ge = new GyMasterDatabaseEntities();
+            //Console.WriteLine(ge.GYM.First().ADDRESS);
         }
+      
     }
 }
