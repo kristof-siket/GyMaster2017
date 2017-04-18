@@ -6,12 +6,14 @@
         xmlns:local="clr-namespace:GyMaster"
         mc:Ignorable="d"
         Title="Bejelentkezés" Height="360" Width="427">
-    <Window.Background>
-        <ImageBrush ImageSource="OlyWeights.png"/>
-    </Window.Background>
+    <!--<Window.Background>
+        <ImageBrush  ImageSource="..\Resources\OlyWeights.png"/>
+    </Window.Background>-->
     <Grid HorizontalAlignment="Right" Width="417" Margin="0,0,2,0">
-
-        <TextBox x:Name="txtFelhnev" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="Felhasználónév" VerticalAlignment="Top" Width="120" Margin="10,154,0,0" TextChanged="textBox1_TextChanged"/>
+        <Grid.Background>
+            <ImageBrush  ImageSource="..\Resources\OlyWeights.png"/>
+        </Grid.Background>
+        <TextBox x:Name="txtFelhnev" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="Felhasználónév" VerticalAlignment="Top" Width="120" Margin="10,154,0,0"/>
         <Button x:Name="button" Content="Belépés" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="31,226,0,0" RenderTransformOrigin="-1.48,-2.25"/>
         <Button x:Name="button1"  Content="Regisztráció" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="31,251,0,0"/>
         <Label x:Name="label2" Content="Üdvözöljük!" HorizontalAlignment="Left" Margin="124,19,0,0" VerticalAlignment="Top" FontSize="30"/>
