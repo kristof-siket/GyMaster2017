@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Data;
+using BusinessLogic;
+using System.Diagnostics;
 
 namespace GyMaster
 {
@@ -24,9 +26,25 @@ namespace GyMaster
         public MainWindow()
         {
             InitializeComponent();
+            Logic l = new Logic();
+            foreach (ATHLETE item in Logic.repo.GetAll())
+            {
+                Debug.WriteLine(item.NAME);
+            }
             //GyMasterDatabaseEntities ge = new GyMasterDatabaseEntities();
             //Console.WriteLine(ge.GYM.First().ADDRESS);
         }
-      
+       
+
+        private void Regisztracio_Click(object sender, RoutedEventArgs e)
+        {
+            RegistrationWindow rw = new RegistrationWindow();
+            rw.ShowDialog();
+        }
+
+        private void Belepes_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

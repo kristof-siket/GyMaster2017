@@ -14,8 +14,8 @@
             <ImageBrush  ImageSource="..\Resources\OlyWeights.png"/>
         </Grid.Background>
         <TextBox x:Name="txtFelhnev" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="Felhasználónév" VerticalAlignment="Top" Width="120" Margin="10,154,0,0"/>
-        <Button x:Name="button" Content="Belépés" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="31,226,0,0" RenderTransformOrigin="-1.48,-2.25"/>
-        <Button x:Name="button1"  Content="Regisztráció" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="31,251,0,0"/>
+        <Button x:Name="button" Content="Belépés" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="31,226,0,0" RenderTransformOrigin="-1.48,-2.25" Click="Belepes_Click"/>
+        <Button x:Name="button1"  Content="Regisztráció" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="31,251,0,0" Click="Regisztracio_Click"/>
         <Label x:Name="label2" Content="Üdvözöljük!" HorizontalAlignment="Left" Margin="124,19,0,0" VerticalAlignment="Top" FontSize="30"/>
         <PasswordBox x:Name="pwbJelszo" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="120" Margin="10,182,0,0" />
 

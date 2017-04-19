@@ -6,10 +6,11 @@
         xmlns:local="clr-namespace:GyMaster"
         mc:Ignorable="d"
         Title="Regisztráció" Height="358.065" Width="333.18">
-    <Window.Background>
-        <ImageBrush ImageSource="SpartaGym.png"/>
-    </Window.Background>
+
     <Grid>
+        <Grid.Background>
+            <ImageBrush  ImageSource="..\Resources\SpartaGym.png"/>
+        </Grid.Background>
         <Label x:Name="label" Content="Név:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,14,0,0"/>
         <Label x:Name="label1" Content="Születési hely:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,103,0,0"/>
         <Label x:Name="label2" Content="Születési idő:" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.877,2.79" Margin="11,134,0,0"/>
@@ -22,7 +23,7 @@
         <TextBox x:Name="txtMagassag" PreviewTextInput="szamPreviewTextInput" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Margin="110,168,0,0"/>
         <TextBox x:Name="txtSuly" PreviewTextInput="szamPreviewTextInput" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap"  Text="" VerticalAlignment="Top" Width="120" Margin="110,196,0,0"/>
         <CheckBox x:Name="chkEdzo" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="110,234,0,0"/>
-        <Button x:Name="button" Content="Mentés" HorizontalAlignment="Left" Margin="126,270,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="button" Content="Mentés" Click="Mentes_Click" HorizontalAlignment="Left" Margin="126,270,0,0" VerticalAlignment="Top" Width="75"/>
         <Label x:Name="label6" Content="Felhasználónév:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,41,0,0"/>
         <Label x:Name="label7" Content="Jelszó:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,72,0,0"/>
         <PasswordBox x:Name="psdJelszo" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="120" Margin="110,73,0,0"/>

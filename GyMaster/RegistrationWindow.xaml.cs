@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BusinessLogic;
+using Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,13 +24,14 @@ namespace GyMaster
         public RegistrationWindow()
         {
             InitializeComponent();
+            
         }
 
         private void szovegPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             foreach (char ch in e.Text)
             {
-                if (Char.IsLetter(ch))
+                if (!Char.IsLetter(ch))
                 {
                     e.Handled = true;
                 }
@@ -39,11 +42,24 @@ namespace GyMaster
         {
             foreach (char ch in e.Text)
             {
-                if (Char.IsNumber(ch))
+                if (!Char.IsNumber(ch))
                 {
                     e.Handled = true;
                 }
             }
+        }
+
+        private void Mentes_Click(object sender, RoutedEventArgs e)
+        {
+            Logic.addNewMember(new ATHLETE
+            {
+                BORN_DATE = null,
+                NAME = txtNev.Text,
+                HEIGHT = int.Parse(txtMagassag.Text),
+                WEIGHT = int.Parse(txtSuly.Text),
+                ID = Logic.repo.GetAll().Count() + 1,
+            },
+              Logic.repo);
         }
     }
 }
