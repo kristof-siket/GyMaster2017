@@ -23,16 +23,12 @@ namespace GyMaster
     /// </summary>
     public partial class MainWindow : Window
     {
+        ViewModel VM;
         public MainWindow()
         {
-            InitializeComponent();
-            Logic l = new Logic();
-            foreach (ATHLETE item in Logic.repo.GetAll())
-            {
-                Debug.WriteLine(item.NAME);
-            }
-            //GyMasterDatabaseEntities ge = new GyMasterDatabaseEntities();
-            //Console.WriteLine(ge.GYM.First().ADDRESS);
+            VM = ViewModel.Get();
+            this.DataContext = VM;
+            InitializeComponent(); 
         }
        
 
@@ -44,7 +40,10 @@ namespace GyMaster
 
         private void Belepes_Click(object sender, RoutedEventArgs e)
         {
-
+            if (VM.BL.LoginEllenorzes(txtFelhnev.Text, pwbJelszo.Password))
+                MessageBox.Show("Sikeres belépés!");
+            else
+                MessageBox.Show("Nincs ilyen tagunk....");
         }
     }
 }

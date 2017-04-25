@@ -21,5 +21,19 @@ namespace BusinessLogic
         {
             repo.Insert(at);
         }
+
+        /// <summary>
+        /// Egyszerű, gagyi login validáció.
+        /// </summary>
+        /// <param name="actUser">Ez lesz majd az inputon beadott név.</param>
+        /// <param name="actPasswd">Input jelszó.</param>
+        /// <returns></returns>
+        public bool LoginEllenorzes(string actUser, string actPasswd)
+        {
+            foreach (ATHLETE a in repo.GetAll())
+                if (a.NAME == actUser && a.PASSWORD == actPasswd)
+                    return true;
+            return false;
+        }
     }
 }
