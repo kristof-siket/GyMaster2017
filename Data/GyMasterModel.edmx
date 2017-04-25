@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="GyMasterDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="GyMasterDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ATHLETE">
           <Key>
             <PropertyRef Name="ID" />
@@ -22,6 +22,7 @@
           <Property Name="IS_PUNISHED" Type="bit" />
           <Property Name="DISCRIMINATOR" Type="nvarchar" MaxLength="50" />
           <Property Name="ERTEKELES" Type="real" />
+          <Property Name="PASSWORD" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="EXERCISE">
           <Key>
@@ -177,8 +178,7 @@
             <End Role="GYM" EntitySet="GYM" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="GyMasterDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -202,8 +202,9 @@
           <NavigationProperty Name="GYM" Relationship="Self.ATHLETE_GYM" FromRole="ATHLETE" ToRole="GYM" />
           <NavigationProperty Name="TRAINING_PLAN" Relationship="Self.ATHLETE_TP_FK" FromRole="ATHLETE" ToRole="TRAINING_PLAN" />
           <NavigationProperty Name="ATHLETE1" Relationship="Self.EDZO_FK" FromRole="ATHLETE" ToRole="ATHLETE1" />
-          <NavigationProperty Name="Trainer" Relationship="Self.EDZO_FK" FromRole="ATHLETE1" ToRole="ATHLETE" />
+          <NavigationProperty Name="ATHLETE2" Relationship="Self.EDZO_FK" FromRole="ATHLETE1" ToRole="ATHLETE" />
           <NavigationProperty Name="GYM1" Relationship="Self.GYM_BOSS" FromRole="ATHLETE" ToRole="GYM" />
+          <Property Name="PASSWORD" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="EXERCISE">
           <Key>
@@ -224,7 +225,7 @@
           <Property Name="TEL" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
           <Property Name="BOSS_ID" Type="Decimal" Precision="4" Scale="0" />
           <NavigationProperty Name="ATHLETE" Relationship="Self.ATHLETE_GYM" FromRole="GYM" ToRole="ATHLETE" />
-          <NavigationProperty Name="BOSS" Relationship="Self.GYM_BOSS" FromRole="GYM" ToRole="ATHLETE" />
+          <NavigationProperty Name="ATHLETE1" Relationship="Self.GYM_BOSS" FromRole="GYM" ToRole="ATHLETE" />
         </EntityType>
         <EntityType Name="RESULT">
           <Key>
@@ -331,7 +332,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="GyMasterDatabaseEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="GyMasterDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ATHLETE" EntityType="Self.ATHLETE" />
           <EntitySet Name="EXERCISE" EntityType="Self.EXERCISE" />
           <EntitySet Name="GYM" EntityType="Self.GYM" />
@@ -366,7 +367,7 @@
             <End Role="RESULT" EntitySet="RESULT" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="TRAINER" BaseType="GyMasterDatabaseModel.ATHLETE" >
+        <EntityType Name="TRAINER" BaseType="GyMasterDatabaseModel.ATHLETE">
           <Property Name="ERTEKELES" Type="Single" />
         </EntityType>
       </Schema>
@@ -374,10 +375,11 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="GyMasterDatabaseModelStoreContainer" CdmEntityContainer="GyMasterDatabaseEntities">
+        <EntityContainerMapping StorageEntityContainer="GyMasterDatabaseModelStoreContainer" CdmEntityContainer="GyMasterDBEntities">
           <EntitySetMapping Name="ATHLETE">
             <EntityTypeMapping TypeName="IsTypeOf(GyMasterDatabaseModel.ATHLETE)">
               <MappingFragment StoreEntitySet="ATHLETE">
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="IS_PUNISHED" ColumnName="IS_PUNISHED" />
                 <ScalarProperty Name="GYM_ID" ColumnName="GYM_ID" />

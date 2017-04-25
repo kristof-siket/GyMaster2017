@@ -9,11 +9,11 @@ namespace BusinessLogic
 {
     public class Logic
     {
-        GyMasterDatabaseEntities gde;
+        GyMasterDBEntities gde;
         public static GyMasterRepository repo { get; set; }
         public Logic()
         {
-            gde = new GyMasterDatabaseEntities();
+            gde = new GyMasterDBEntities();
             repo = new GyMasterRepository(gde);
         }
 

@@ -9,8 +9,8 @@ namespace Data
 {
     public class GyMasterRepository : IRepository<ATHLETE>
     {
-        GyMasterDatabaseEntities gde;
-        public GyMasterRepository(GyMasterDatabaseEntities gde)
+        GyMasterDBEntities gde;
+        public GyMasterRepository(GyMasterDBEntities gde)
         {
             this.gde = gde;
         }

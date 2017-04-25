@@ -34,6 +34,7 @@ namespace Data
         public Nullable<decimal> FAV_EXERCISE { get; set; }
         public Nullable<decimal> GYM_ID { get; set; }
         public Nullable<bool> IS_PUNISHED { get; set; }
+        public string PASSWORD { get; set; }
     
         public virtual EXERCISE EXERCISE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -43,7 +44,7 @@ namespace Data
         public virtual ICollection<TRAINING_PLAN> TRAINING_PLAN { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ATHLETE> ATHLETE1 { get; set; }
-        public virtual ATHLETE Trainer { get; set; }
+        public virtual ATHLETE ATHLETE2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GYM> GYM1 { get; set; }
     }

@@ -13,10 +13,10 @@ namespace Data
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class GyMasterDatabaseEntities : DbContext
+    public partial class GyMasterDBEntities : DbContext
     {
-        public GyMasterDatabaseEntities()
-            : base("name=GyMasterDatabaseEntities")
+        public GyMasterDBEntities()
+            : base("name=GyMasterDBEntities")
         {
         }
     
