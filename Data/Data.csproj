@@ -69,6 +69,7 @@
     <Compile Include="ATHLETE.cs">
       <DependentUpon>GyMasterModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DatabaseEntityProvider.cs" />
     <Compile Include="EXERCISE.cs">
       <DependentUpon>GyMasterModel.tt</DependentUpon>
     </Compile>
@@ -90,7 +91,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GyMasterModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="GyMasterRepository.cs" />
+    <Compile Include="Repositories.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RESULT.cs">

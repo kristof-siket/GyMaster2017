@@ -9,15 +9,30 @@ namespace BusinessLogic
 {
     public class Logic
     {
-        GyMasterDBEntities gde;
-        public static GyMasterRepository repo { get; set; }
-        public Logic()
+        static GyMasterDBEntities gde;
+        private AthleteRepository athleteRepo;
+
+        public AthleteRepository GetAthleteRepository()
         {
-            gde = new GyMasterDBEntities();
-            repo = new GyMasterRepository(gde);
+            if (athleteRepo == null)
+                athleteRepo = new AthleteRepository();
+            return athleteRepo;
         }
 
-        public static void addNewMember(ATHLETE at,GyMasterRepository repo)
+        public static GyMasterDBEntities GetDbEntities()
+        {
+            if (gde == null)
+                gde = new GyMasterDBEntities();
+            return gde;
+        }
+
+        public Logic()
+        {
+            gde = new GyMasterDBEntities() ;
+            athleteRepo = new AthleteRepository();
+        }
+
+        public static void addNewMember(ATHLETE at,AthleteRepository repo)
         {
             repo.Insert(at);
         }
@@ -30,7 +45,7 @@ namespace BusinessLogic
         /// <returns></returns>
         public bool LoginEllenorzes(string actUser, string actPasswd)
         {
-            foreach (ATHLETE a in repo.GetAll())
+            foreach (ATHLETE a in athleteRepo.GetAll())
                 if (a.NAME == actUser && a.PASSWORD == actPasswd)
                     return true;
             return false;

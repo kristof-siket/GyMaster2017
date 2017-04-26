@@ -21,8 +21,11 @@ namespace GyMaster
     /// </summary>
     public partial class RegistrationWindow : Window
     {
+        ViewModel VM;
         public RegistrationWindow()
         {
+            VM = ViewModel.Get();
+            this.DataContext = VM;
             InitializeComponent();
             
         }
@@ -57,9 +60,9 @@ namespace GyMaster
                 NAME = txtNev.Text,
                 HEIGHT = int.Parse(txtMagassag.Text),
                 WEIGHT = int.Parse(txtSuly.Text),
-                ID = Logic.repo.GetAll().Count() + 1,
+                ID = VM.BL.GetAthleteRepository().GetAll().Count() + 1,
             },
-              Logic.repo);
+              VM.BL.GetAthleteRepository());
         }
     }
 }
