@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GyMaster"
         mc:Ignorable="d"
-        Title="Bejelentkezés" Height="360" Width="427">
+        Title="Bejelentkezés" Height="360" Width="427" WindowStartupLocation="CenterScreen">
     <!--<Window.Background>
         <ImageBrush  ImageSource="..\Resources\OlyWeights.png"/>
     </Window.Background>-->

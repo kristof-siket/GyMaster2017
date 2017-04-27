@@ -1,0 +1,27 @@
+﻿<Window x:Class="GyMaster.LoggedInWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GyMaster"
+        mc:Ignorable="d"
+        Title="LoggedInWindow" WindowState="Maximized">
+    <Grid>
+        <ListBox HorizontalAlignment="Left" ItemsSource="{Binding Athletes}" Height="334" Margin="10,84,0,0" VerticalAlignment="Top" Width="740">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <Label Content="{Binding NAME}"/>
+                        <Label Content=""/>
+                        <Label Content=""/>
+                        <Label Content=""/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            </ListBox>
+        <Label Content="{Binding loggedInAthlete.NAME}" ContentStringFormat="Üdvözöllek {0}!" FontSize="40" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.985,0.098" Width="508" Height="69"/>
+        <Button Content="Edzés kiírás" HorizontalAlignment="Left" Margin="258,423,0,0" VerticalAlignment="Top" Width="227"/>
+        <Button Content="Adatmódosítás" HorizontalAlignment="Left" Margin="258,448,0,0" VerticalAlignment="Top" Width="227"/>
+
+    </Grid>
+</Window>

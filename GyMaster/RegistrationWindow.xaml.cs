@@ -61,8 +61,10 @@ namespace GyMaster
                 HEIGHT = int.Parse(txtMagassag.Text),
                 WEIGHT = int.Parse(txtSuly.Text),
                 ID = VM.BL.GetAthleteRepository().GetAll().Count() + 1,
+                PASSWORD=psdJelszo.Password
             },
-              VM.BL.GetAthleteRepository());
+              VM.BL.GetAthleteRepository());           
+              this.DialogResult = true;
         }
     }
 }

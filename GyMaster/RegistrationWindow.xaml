@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GyMaster"
         mc:Ignorable="d"
-        Title="Regisztráció" Height="358.065" Width="333.18">
+        Title="Regisztráció" Height="358.065" Width="333.18" WindowStartupLocation="CenterScreen">
 
     <Grid>
         <Grid.Background>

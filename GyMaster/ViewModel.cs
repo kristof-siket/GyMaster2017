@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessLogic;
+using Data;
+using System.Collections.ObjectModel;
 
 namespace GyMaster
 {
@@ -13,6 +15,8 @@ namespace GyMaster
     public class ViewModel
     {
         Logic bl;
+        public ATHLETE loggedInAthlete { get; set; }
+        public ObservableCollection<ATHLETE> Athletes { get; set; }
 
         public Logic BL
         {
@@ -36,6 +40,7 @@ namespace GyMaster
         private ViewModel()
         {
             bl = new Logic();
+            Athletes = Logic.ToObservableCollection(bl.GetAthleteRepository().GetAll());            
         }
     }
 }
