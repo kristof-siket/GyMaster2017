@@ -11,9 +11,25 @@ namespace BusinessLogic
 {
     public class Logic
     {
-        static GyMasterDBEntities gde;
-        private static AthleteRepository athleteRepo;
+        private GyMasterDBEntities gde;
 
+        private AthleteRepository athleteRepo;
+        private GymRepository gymRepo;
+        private TrainingPlanRepository trainingPlanRepo;
+        private ExerciseRepository exerciseRepo;
+        private ResultRepository resultRepo;
+
+        public Logic()
+        {
+            gde = DatabaseEntityProvider.GetDatabaseEntities();
+        }
+
+        //-----------------------------------INNENTŐL JÖNNEK A REPOKAT ELÉRŐ METÓDUSOK-------------------------------//
+
+        /// <summary>
+        /// Visszaadja az AthleteRepository-t.
+        /// </summary>
+        /// <returns>Az egyetlen AthleteRepository.</returns>
         public  AthleteRepository GetAthleteRepository()
         {
             if (athleteRepo == null)
@@ -21,19 +37,51 @@ namespace BusinessLogic
             return athleteRepo;
         }
 
-        public static GyMasterDBEntities GetDbEntities()
+        /// <summary>
+        /// Visszaadja a GymRepository-t.
+        /// </summary>
+        /// <returns>Az egyetlen GymRepository.</returns>
+        public GymRepository GetGymRepository()
         {
-            if (gde == null)
-                gde = new GyMasterDBEntities();
-            return gde;
+            if (gymRepo == null)
+                gymRepo = new GymRepository();
+            return gymRepo;
         }
 
-        public Logic()
+        /// <summary>
+        /// Visszaadja az TrainingPlanRepository-t.
+        /// </summary>
+        /// <returns>Az egyetlen TrainingPlanRepository.</returns>
+        public TrainingPlanRepository GetTrainingPlanRepository()
         {
-            gde = new GyMasterDBEntities() ;
-            athleteRepo = new AthleteRepository();
-            
+            if (trainingPlanRepo == null)
+                trainingPlanRepo = new TrainingPlanRepository();
+            return trainingPlanRepo;
         }
+
+        /// <summary>
+        /// Visszaadja az ExerciseRepository-t.
+        /// </summary>
+        /// <returns>Az egyetlen ExerciseRepository.</returns>
+        public ExerciseRepository GetExerciseRepository()
+        {
+            if (exerciseRepo == null)
+                exerciseRepo = new ExerciseRepository();
+            return exerciseRepo;
+        }
+
+        /// <summary>
+        /// Visszaadja az ResultRepository-t.
+        /// </summary>
+        /// <returns>Az egyetlen ResultRepository.</returns>
+        public ResultRepository GetResultRepository()
+        {
+            if (resultRepo == null)
+                resultRepo = new ResultRepository();
+            return resultRepo;
+        }
+
+        //---------------------------------------REPO-METÓDUSOK VÉGE-----------------------------------------------//
 
         public static void addNewMember(ATHLETE at,AthleteRepository ar)
         {
@@ -46,7 +94,7 @@ namespace BusinessLogic
         /// </summary>
         /// <param name="actUser">Ez lesz majd az inputon beadott név.</param>
         /// <param name="actPasswd">Input jelszó.</param>
-        /// <returns></returns>
+        /// <returns>Van, vagy nincs ilyen név-jelszó pár.</returns>
         public bool LoginEllenorzes(string actUser, string actPasswd)
         {
             foreach (ATHLETE a in athleteRepo.GetAll())
@@ -112,7 +160,13 @@ namespace BusinessLogic
 
         //}
 
-        public static ObservableCollection<T> ToObservableCollection<T>(IEnumerable<T> enumeration)
+        /// <summary>
+        /// Gyűjteményt alakít ObservableCollection-ná (GUI megjelenítéshez).
+        /// </summary>
+        /// <typeparam name="T">A collection típusparamétere.</typeparam>
+        /// <param name="enumeration">A bemeneti gyűjtemény.</param>
+        /// <returns>A bemeneti gyűjtemény konvertálva ObservableCollection-né.</returns>
+        public ObservableCollection<T> ToObservableCollection<T>(IEnumerable<T> enumeration) // Kristóf: átírtam ezt is példányszintűre, mivel a ViewModelben úgyis le van példányosítva a BL
         {
             return new ObservableCollection<T>(enumeration);
         }

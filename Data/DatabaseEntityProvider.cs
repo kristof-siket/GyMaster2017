@@ -9,7 +9,7 @@ namespace Data
     /// <summary>
     /// Az adatbázis-entitásokat szolgáltató statikus osztály.
     /// </summary>
-    static class DatabaseEntityProvider
+    public static class DatabaseEntityProvider
     {
         private static GyMasterDBEntities gde;
 

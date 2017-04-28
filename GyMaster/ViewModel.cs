@@ -40,7 +40,7 @@ namespace GyMaster
         private ViewModel()
         {
             bl = new Logic();
-            Athletes = Logic.ToObservableCollection(bl.GetAthleteRepository().GetAll());            
+            Athletes = bl.ToObservableCollection(bl.GetAthleteRepository().GetAll());            
         }
     }
 }
