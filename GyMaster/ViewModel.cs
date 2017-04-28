@@ -15,8 +15,17 @@ namespace GyMaster
     public class ViewModel
     {
         Logic bl;
+
+        // ----------------------------BINDING----------------------------------- //
+
         public ATHLETE loggedInAthlete { get; set; }
         public ObservableCollection<ATHLETE> Athletes { get; set; }
+        public ObservableCollection<GYM> Gyms { get; set; }
+        public ObservableCollection<TRAINING_PLAN> TrainingPlans { get; set; }
+        public ObservableCollection<EXERCISE> Exercises { get; set; }
+        public ObservableCollection<RESULT> Results { get; set; }
+
+        // ----------------------------END BINDING----------------------------------- //
 
         public Logic BL
         {
@@ -40,7 +49,11 @@ namespace GyMaster
         private ViewModel()
         {
             bl = new Logic();
-            Athletes = bl.ToObservableCollection(bl.GetAthleteRepository().GetAll());            
+            Athletes = bl.ToObservableCollection(bl.GetAthleteRepository().GetAll());
+            Gyms = bl.ToObservableCollection(bl.GetGymRepository().GetAll());
+            TrainingPlans = bl.ToObservableCollection(bl.GetTrainingPlanRepository().GetAll());
+            Exercises = bl.ToObservableCollection(bl.GetExerciseRepository().GetAll());
+            Results = bl.ToObservableCollection(bl.GetResultRepository().GetAll());
         }
     }
 }
