@@ -54,7 +54,7 @@ namespace GyMaster
 
         private void Mentes_Click(object sender, RoutedEventArgs e)
         {
-            Logic.addNewMember(new ATHLETE
+            VM.BL.addNewMember(new ATHLETE
             {
                 BORN_DATE = null,
                 NAME = txtNev.Text,

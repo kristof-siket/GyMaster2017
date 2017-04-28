@@ -52,10 +52,7 @@ namespace GyMaster
             }
 
             else
-                MessageBox.Show("Nincs ilyen tagunk....");
-            
-            
-
+                MessageBox.Show("Nincs ilyen tagunk....");        
         }
     }
 }

@@ -83,7 +83,12 @@ namespace BusinessLogic
 
         //---------------------------------------REPO-METÓDUSOK VÉGE-----------------------------------------------//
 
-        public static void addNewMember(ATHLETE at,AthleteRepository ar)
+        /// <summary>
+        /// Új tag hozzáadása a rendszerhez.
+        /// </summary>
+        /// <param name="at">A hozzáadandó sportoló.</param>
+        /// <param name="ar">Az ATHLETE objektumokhoz való hozzáférést kezelő repository.</param>
+        public void addNewMember(ATHLETE at,AthleteRepository ar)
         {
             //ATHLETE at = new ATHLETE { NAME = name, PASSWORD = password };           
            ar.Insert(at);                    
