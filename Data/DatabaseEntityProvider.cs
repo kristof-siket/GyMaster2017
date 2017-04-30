@@ -13,6 +13,10 @@ namespace Data
     {
         private static GyMasterDBEntities gde;
 
+        /// <summary>
+        /// Ezen keresztül kell elérni a gde-t.
+        /// </summary>
+        /// <returns>GyMasterDBEntities példány.</returns>
         public static GyMasterDBEntities GetDatabaseEntities()
         {
             if (gde == null)

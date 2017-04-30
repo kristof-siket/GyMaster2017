@@ -6,13 +6,38 @@ using System.Threading.Tasks;
 using BusinessLogic;
 using Data;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace GyMaster
 {
     /// <summary>
+    /// Az 'adatköthető' entitásokat reprezentáló absztrakt osztály.
+    /// </summary>
+    public abstract class Bindable : INotifyPropertyChanged
+    {
+        /// <summary>
+        /// A tulajdonságváltozást jelző esemény.
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// PropertyChanged esemény "elsütése".
+        /// </summary>
+        /// <param name="n">A hívó property.</param>
+        protected void OPC([CallerMemberName]string n = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(n));
+            }
+        }
+    }
+
+    /// <summary>
     /// Singleton tervezésű ViewModel az MVVM pattern implementálásához.
     /// </summary>
-    public class ViewModel
+    public class ViewModel : Bindable
     {
         Logic bl;
 
