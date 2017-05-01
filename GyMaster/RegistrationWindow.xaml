@@ -12,22 +12,20 @@
             <ImageBrush  ImageSource="..\Resources\SpartaGym.png"/>
         </Grid.Background>
         <Label x:Name="label" Content="Név:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,14,0,0"/>
-        <Label x:Name="label1" Content="Születési hely:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,103,0,0"/>
-        <Label x:Name="label2" Content="Születési idő:" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.877,2.79" Margin="11,134,0,0"/>
-        <Label x:Name="label3" Content="Magasság:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,165,0,0"/>
-        <Label x:Name="label4" Content="Testsúly:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,196,0,0"/>
-        <Label x:Name="label5" Content="Edző-e:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,227,0,0"/>
-        <TextBox x:Name="txtNev" PreviewTextInput="szovegPreviewTextInput" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Margin="110,17,0,0"/>
-        <TextBox x:Name="txtSzulHely" PreviewTextInput="szovegPreviewTextInput"  HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Margin="110,106,0,0"/>
-        <DatePicker x:Name="dpSzulDatum" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="110,135,0,0"/>
-        <TextBox x:Name="txtMagassag" PreviewTextInput="szamPreviewTextInput" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Margin="110,168,0,0"/>
-        <TextBox x:Name="txtSuly" PreviewTextInput="szamPreviewTextInput" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap"  Text="" VerticalAlignment="Top" Width="120" Margin="110,196,0,0"/>
-        <CheckBox x:Name="chkEdzo" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="110,234,0,0"/>
+        <Label x:Name="label1" Content="Születési hely:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,75,0,0"/>
+        <Label x:Name="label2" Content="Születési idő:" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.877,2.79" Margin="10,103,0,0"/>
+        <Label x:Name="label3" Content="Magasság:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,132,0,0"/>
+        <Label x:Name="label4" Content="Testsúly:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,157,0,0" RenderTransformOrigin="0.467,-0.445"/>
+        <Label x:Name="label5" Content="Edző-e:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,188,0,0"/>
+        <TextBox x:Name="txtNev" PreviewTextInput="szovegPreviewTextInput" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding NAME}" VerticalAlignment="Top" Width="120" Margin="110,17,0,0"/>
+        <TextBox x:Name="txtSzulHely" PreviewTextInput="szovegPreviewTextInput"  HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding BORN_IN}" VerticalAlignment="Top" Width="120" Margin="110,75,0,0"/>
+        <DatePicker x:Name="dpSzulDatum" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="110,103,0,0"/>
+        <TextBox x:Name="txtMagassag" PreviewTextInput="szamPreviewTextInput" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding HEIGHT}" VerticalAlignment="Top" Width="120" Margin="110,132,0,0"/>
+        <TextBox x:Name="txtSuly" PreviewTextInput="szamPreviewTextInput" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap"  Text="{Binding WEIGHT}" VerticalAlignment="Top" Width="120" Margin="110,160,0,0"/>
+        <CheckBox x:Name="chkEdzo" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="110,199,0,0"/>
         <Button x:Name="button" Content="Mentés" Click="Mentes_Click" HorizontalAlignment="Left" Margin="126,270,0,0" VerticalAlignment="Top" Width="75"/>
-        <Label x:Name="label6" Content="Felhasználónév:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,41,0,0"/>
-        <Label x:Name="label7" Content="Jelszó:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,72,0,0"/>
-        <PasswordBox x:Name="psdJelszo" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="120" Margin="110,73,0,0"/>
-        <TextBox x:Name="txtFelhasznalo" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Margin="110,45,0,0"/>
+        <Label x:Name="label7" Content="Jelszó:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,44,0,0"/>
+        <PasswordBox x:Name="psdJelszo"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="120" Margin="110,45,0,0"/>
 
     </Grid>
 </Window>

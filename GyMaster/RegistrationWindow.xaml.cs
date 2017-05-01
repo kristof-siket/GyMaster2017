@@ -22,11 +22,22 @@ namespace GyMaster
     public partial class RegistrationWindow : Window
     {
         ViewModel VM;
-        public RegistrationWindow()
+        public ATHLETE UjSportolo { get; private set; }
+        public RegistrationWindow(bool mod=false)
         {
             VM = ViewModel.Get();
             this.DataContext = VM;
             InitializeComponent();
+            if(mod)
+            {
+                VM = ViewModel.Get();
+                DataContext = VM.loggedInAthlete;
+            }
+            else
+            {
+                UjSportolo = new ATHLETE();
+                DataContext = UjSportolo;
+            }
             
         }
 
@@ -54,17 +65,38 @@ namespace GyMaster
 
         private void Mentes_Click(object sender, RoutedEventArgs e)
         {
-            VM.BL.addNewMember(new ATHLETE
+            if (chkEdzo.IsChecked == true)
             {
-                BORN_DATE = null,
-                NAME = txtNev.Text,
-                HEIGHT = int.Parse(txtMagassag.Text),
-                WEIGHT = int.Parse(txtSuly.Text),
-                ID = VM.BL.GetAthleteRepository().GetAll().Count() + 1,
-                PASSWORD=psdJelszo.Password
-            },
-              VM.BL.GetAthleteRepository());           
-              this.DialogResult = true;
+                UjSportolo = new TRAINER
+                {
+                    BORN_DATE = null,
+                    NAME = txtNev.Text,
+                    HEIGHT = int.Parse(txtMagassag.Text),
+                    WEIGHT = int.Parse(txtSuly.Text),
+                    ID = VM.BL.GetAthleteRepository().GetAll().Count() + 1,
+                    PASSWORD = psdJelszo.Password
+                };
+            }
+
+            else
+            {
+                UjSportolo = new ATHLETE
+                {
+                    BORN_DATE = null,
+                    NAME = txtNev.Text,
+                    HEIGHT = int.Parse(txtMagassag.Text),
+                    WEIGHT = int.Parse(txtSuly.Text),
+                    ID = VM.BL.GetAthleteRepository().GetAll().Count() + 1,
+                    PASSWORD = psdJelszo.Password
+                };
+            }
+
+            this.DialogResult = true;
+            //txtNev.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            //txtMagassag.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            //txtSuly.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            //txtSzulHely.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            //psdJelszo.GetBindingExpression(PasswordBox)
         }
     }
 }

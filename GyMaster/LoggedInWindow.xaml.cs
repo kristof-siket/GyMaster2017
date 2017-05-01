@@ -28,5 +28,23 @@ namespace GyMaster
             InitializeComponent();
             this.DataContext = VM;
         }
+
+        private void Adatmodositas_Click(object sender, RoutedEventArgs e)
+        {
+            RegistrationWindow rw = new RegistrationWindow(true);
+            rw.ShowDialog();
+        }
+
+        private void Megbuntet_Click(object sender, RoutedEventArgs e)
+        {
+            if (VM.loggedInAthlete is TRAINER)
+            {
+                VM.selectedAthlete.IS_PUNISHED = true;              
+            }
+
+            else
+                MessageBox.Show("Nem büntetheted meg mivel, Te nem vagy edző!");
+            
+        }
     }
 }
