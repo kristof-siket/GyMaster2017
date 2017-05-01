@@ -33,6 +33,14 @@ namespace Data
             gde.ATHLETE.Add(uj);
             gde.SaveChanges();
         }
+
+        public ATHLETE GetAthleteByName(string name)
+        {
+            var res = from x in this.GetAll()
+                      where x.NAME == name
+                      select x;
+            return res.First();
+        }
     }
 
     public class GymRepository : IRepository<GYM>
@@ -113,6 +121,14 @@ namespace Data
         {
             gde.EXERCISE.Add(uj);
             gde.SaveChanges();
+        }
+
+        public EXERCISE GetExerciseByName(string name)
+        {
+            var res = from x in this.GetAll()
+                      where x.NAME == name
+                      select x;
+            return res.First();
         }
     }
     public class ResultRepository : IRepository<RESULT>

@@ -108,6 +108,147 @@ namespace BusinessLogic
             return false;
         }
 
+        /// <summary>
+        /// Egy edzéstömböt generál a sportoló tagsági ideje, és a kedvenc, illetve leggyengébb gyakorlatához illeszkedve.
+        /// </summary>
+        /// <param name="a">A sportoló, akinek a terv készül.</param>
+        /// <returns>3 vagy 4 elemű Edzés-ekből álló tömb. (attól függ, hány nap edzés kell)</returns>
+        private Training[] GenerateTrainingArray(ATHLETE a)
+        {
+            int hetiEdzesSzam;
+            Training[] edzesTomb;
+
+            if (a.IS_PUNISHED != null && !(bool)a.IS_PUNISHED)
+            {
+                // először megnézzük, mióta edz (mióta tag), ha 1 év vagy annál több, akkor heti 4 edzés, ha kevesebb, akkor csak 3
+                if ((DateTime.Now.Year - a.MEMBER_FROM.Value.Year) <= 2)
+                    hetiEdzesSzam = 3;
+                else
+                    hetiEdzesSzam = 4;
+                edzesTomb = new Training[hetiEdzesSzam];
+                edzesTomb[0] = new Training() { FoGyakorlat = a.FAVOURITE_EX };
+                switch (edzesTomb[0].FoGyakorlat.NAME) // úgy tervezzük, hogy végezhesse a hét első edzésén a kedvenc gyakorlatát
+                {
+                    case "Fekvenyomás":
+                        edzesTomb[0].Title = "Mell edzés";
+                        break;
+                    case "Guggolás":
+                        edzesTomb[0].Title = "Láb edzés";
+                        break;
+                    case "Felhúzás":
+                        edzesTomb[0].Title = "Hát edzés";
+                        break;
+                    default:
+                        edzesTomb[0].Title = "Nem működik ez a szviccs.";
+                        break;
+                }
+
+                if (hetiEdzesSzam == 3) // a helyzet egyértelmű, minden gyakorlat köré egy edzés épül a héten
+                {
+                    for (int i = 1; i < edzesTomb.Length; i++)
+                    {
+                        edzesTomb[i] = new Training();
+                    }
+
+                    switch (a.FAVOURITE_EX.NAME) // elég redundáns, majd lehet refaktorálni
+                    {
+                        case "Fekvenyomás": // ha a hét mellnappal indult
+                            edzesTomb[1].FoGyakorlat = GetExerciseRepository().GetExerciseByName("Guggolás");
+                            edzesTomb[1].Title = "Láb edzés";
+                            edzesTomb[2].FoGyakorlat = GetExerciseRepository().GetExerciseByName("Felhúzás");
+                            edzesTomb[2].Title = "Hát edzés";
+                            break;
+                        case "Guggolás": // ha a hét lábnappal indult
+                            edzesTomb[1].FoGyakorlat = GetExerciseRepository().GetExerciseByName("Fekvenyomás");
+                            edzesTomb[1].Title = "Mell edzés";
+                            edzesTomb[2].FoGyakorlat = GetExerciseRepository().GetExerciseByName("Felhúzás");
+                            edzesTomb[2].Title = "Hát edzés";
+                            break;
+                        case "Felhúzás": // ha a hét hátnappal indult
+                            edzesTomb[1].FoGyakorlat = GetExerciseRepository().GetExerciseByName("Fekvenyomás");
+                            edzesTomb[1].Title = "Mell edzés";
+                            edzesTomb[2].FoGyakorlat = GetExerciseRepository().GetExerciseByName("Guggolás");
+                            edzesTomb[2].Title = "Láb edzés";
+                            break;
+                    }
+                }
+
+                else if (hetiEdzesSzam == 4) // valamelyik területre dupla edzés mehet, szóval ki kell választani a leggyengébb területet
+                {
+                    var sportolo_eredmenyei = from x in GetResultRepository().GetAll().ToList()
+                                              where x.ATHLETE == a
+                                              select x;
+
+                    var res_weakest = from x in sportolo_eredmenyei
+                                      let xmin = sportolo_eredmenyei.Min(y => y.RES_KG)
+                                      where x.RES_KG == xmin
+                                      select x.EXERCISE;
+
+                    for (int i = 1; i < edzesTomb.Length; i++)
+                    {
+                        edzesTomb[i] = new Training();
+                    }
+
+                    EXERCISE leggyengebbGyakorlat = res_weakest.ToList().Single();
+                    switch (a.FAVOURITE_EX.NAME) // elég redundáns, majd lehet refaktorálni
+                    {
+                        case "Fekvenyomás": // ha a hét mellnappal indult
+                            edzesTomb[1].FoGyakorlat = GetExerciseRepository().GetExerciseByName("Guggolás");
+                            edzesTomb[1].Title = "Láb edzés";
+                            edzesTomb[2].FoGyakorlat = GetExerciseRepository().GetExerciseByName("Felhúzás");
+                            edzesTomb[2].Title = "Hát edzés";
+                            break;
+                        case "Guggolás": // ha a hét lábnappal indult
+                            edzesTomb[1].FoGyakorlat = GetExerciseRepository().GetExerciseByName("Fekvenyomás");
+                            edzesTomb[1].Title = "Mell edzés";
+                            edzesTomb[2].FoGyakorlat = GetExerciseRepository().GetExerciseByName("Felhúzás");
+                            edzesTomb[2].Title = "Hát edzés";
+                            break;
+                        case "Felhúzás": // ha a hét hátnappal indult
+                            edzesTomb[1].FoGyakorlat = GetExerciseRepository().GetExerciseByName("Fekvenyomás");
+                            edzesTomb[1].Title = "Mell edzés";
+                            edzesTomb[2].FoGyakorlat = GetExerciseRepository().GetExerciseByName("Guggolás");
+                            edzesTomb[2].Title = "Láb edzés";
+                            break;
+                    }
+                    edzesTomb[3].FoGyakorlat = leggyengebbGyakorlat; // beállítjuk az utsó edzésre a leggyengébb gyakorlatot
+                    switch (leggyengebbGyakorlat.NAME)
+                    {
+                        case "Fekvenyomás":
+                            edzesTomb[3].Title = "Mell edzés";
+                            break;
+                        case "Guggolás":
+                            edzesTomb[3].Title = "Láb edzés";
+                            break;
+                        case "Felhúzás":
+                            edzesTomb[3].Title = "Hát edzés";
+                            break;
+                    }
+
+                    if (edzesTomb[3].FoGyakorlat.NAME == edzesTomb[2].FoGyakorlat.NAME) // megoldjuk, hogy tuti ne legyen 2 egymást követő napon ugyanolyan edzés
+                    {
+                        Training atm = edzesTomb[2];
+                        edzesTomb[2] = edzesTomb[1];
+                        edzesTomb[1] = atm;
+                    }
+                }
+                return edzesTomb;
+            }
+            else
+                throw new AthleteIsPunishedException(); // ezt a hívás helyén kell majd elkapni
+        }
+
+        // ezzel csak tesztelem
+        public void GenerateTrainingPlan(string athleteName)
+        {
+            Training[] edzesTomb = GenerateTrainingArray(GetAthleteRepository().GetAthleteByName(athleteName));
+
+            foreach (Training t in edzesTomb)
+            {
+                Console.WriteLine(t.Title);
+            }
+        }
+
         //public static void GUIBuild(ATHLETE loggedInAthlete, Grid g)
         //{
         //    int i = 1;
@@ -175,5 +316,17 @@ namespace BusinessLogic
         {
             return new ObservableCollection<T>(enumeration);
         }
+    }
+
+    public class AthleteIsPunishedException : Exception
+    {
+
+    }
+
+    class Training
+    {
+        public string Title { get; set; }
+        public EXERCISE FoGyakorlat { get; set; }
+        public string Leiras { get; set; }
     }
 }

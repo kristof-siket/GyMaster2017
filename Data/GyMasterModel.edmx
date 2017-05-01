@@ -197,7 +197,7 @@
           <Property Name="FAV_EXERCISE" Type="Decimal" Precision="3" Scale="0" />
           <Property Name="GYM_ID" Type="Decimal" Precision="2" Scale="0" />
           <Property Name="IS_PUNISHED" Type="Boolean" />
-          <NavigationProperty Name="EXERCISE" Relationship="Self.ATHLETE_FAVEX" FromRole="ATHLETE" ToRole="EXERCISE" />
+          <NavigationProperty Name="FAVOURITE_EX" Relationship="Self.ATHLETE_FAVEX" FromRole="ATHLETE" ToRole="EXERCISE" />
           <NavigationProperty Name="RESULT" Relationship="Self.ATHLETE_FK" FromRole="ATHLETE" ToRole="RESULT" />
           <NavigationProperty Name="GYM" Relationship="Self.ATHLETE_GYM" FromRole="ATHLETE" ToRole="GYM" />
           <NavigationProperty Name="TRAINING_PLAN" Relationship="Self.ATHLETE_TP_FK" FromRole="ATHLETE" ToRole="TRAINING_PLAN" />
