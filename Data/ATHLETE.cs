@@ -12,7 +12,6 @@ namespace Data
     using System;
     using System.Collections.Generic;
     
-    
     public partial class ATHLETE
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -37,7 +36,7 @@ namespace Data
         public Nullable<bool> IS_PUNISHED { get; set; }
         public string PASSWORD { get; set; }
     
-        public virtual EXERCISE EXERCISE { get; set; }
+        public virtual EXERCISE FAVOURITE_EX { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RESULT> RESULT { get; set; }
         public virtual GYM GYM { get; set; }

@@ -10,7 +10,7 @@
         <local:AthleteToIsEnabledConverter x:Key="ATIEC"/>
     </Window.Resources>
     <Grid>
-        <ListBox HorizontalAlignment="Left" ItemsSource="{Binding Athletes}" SelectedItem="{Binding selectedAthlete}" Height="334" Margin="10,84,0,0" VerticalAlignment="Top" Width="740">
+        <ListBox HorizontalAlignment="Left" ItemsSource="{Binding Athletes}" SelectedItem="{Binding SelectedAthlete}" Height="334" Margin="10,84,0,0" VerticalAlignment="Top" Width="740">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
@@ -23,7 +23,7 @@
             </ListBox.ItemTemplate>
             </ListBox>
         <Label Content="{Binding loggedInAthlete.NAME}" ContentStringFormat="Üdvözöllek {0}!" FontSize="40" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.985,0.098" Width="508" Height="69"/>
-        <Button Content="Edzés kiírás" HorizontalAlignment="Left" Margin="258,423,0,0" VerticalAlignment="Top" Width="227"/>
+        <Button Content="Edzés kiírás" Click="Edzesterv_Click" HorizontalAlignment="Left" Margin="258,423,0,0" VerticalAlignment="Top" Width="227"/>
         <Button Content="Adatmódosítás" Click="Adatmodositas_Click" HorizontalAlignment="Left" Margin="258,448,0,0" VerticalAlignment="Top" Width="227"/>
         <Button Content="Megbüntet" HorizontalAlignment="Left" Click="Megbuntet_Click" VerticalAlignment="Top" Width="75" Margin="551,423,0,0"/>
 

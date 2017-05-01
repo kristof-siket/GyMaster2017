@@ -39,12 +39,27 @@ namespace GyMaster
         {
             if (VM.loggedInAthlete is TRAINER)
             {
-                VM.selectedAthlete.IS_PUNISHED = true;              
+                VM.SelectedAthlete.IS_PUNISHED = true;              
             }
 
             else
                 MessageBox.Show("Nem büntetheted meg mivel, Te nem vagy edző!");
-            
+        }
+
+        private void Edzesterv_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                VM.BL.GenerateTrainingPlan("Darnyi Tamás");
+            }
+            catch (AthleteIsPunishedException)
+            {
+                MessageBox.Show("Ez a felhasználó nem kaphat edzéstervet, mert büntetett!");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("A rendszer nem tud edzéstervet generálni ennek a sportolónak!");
+            }
         }
     }
 }
