@@ -9,17 +9,18 @@ using System.Windows.Data;
 
 namespace GyMaster
 {
-    public class AthleteToIsEnabledConverter : IValueConverter
+    public class IsPunishedToText : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if((ATHLETE)value is TRAINER)
+                        
+            if ((bool)value)
             {
-                return true;
+                return "A sportoló meg van büntetve!";
             }
             else
             {
-                return false;
+                return "A sportoló nincs megbüntetve";
             }
         }
 

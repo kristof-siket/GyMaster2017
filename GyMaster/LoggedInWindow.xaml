@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Title="LoggedInWindow" WindowState="Maximized">
     <Window.Resources>
-        <local:AthleteToIsEnabledConverter x:Key="ATIEC"/>
+        <local:IsPunishedToText x:Key="IPTT"/>
+        <local:FavExScoreConverter x:Key="FECS"/>
     </Window.Resources>
     <Grid>
         <ListBox HorizontalAlignment="Left" ItemsSource="{Binding Athletes}" SelectedItem="{Binding SelectedAthlete}" Height="334" Margin="10,84,0,0" VerticalAlignment="Top" Width="740">
@@ -15,9 +16,10 @@
                 <DataTemplate>
                     <StackPanel>
                         <Label Content="{Binding NAME}"/>
-                        <Label Content="{Binding IS_PUNISHED}"/>
-                        <Label Content=""/>
-                        <Label Content=""/>
+                        <Label Content="{Binding IS_PUNISHED, Converter={StaticResource IPTT}}"/>
+                        <Label Content="{Binding MEMBER_FROM}" ContentStringFormat="Csatlakozott: {0}"/>
+                        <Label Content="{Binding BORN_DATE}" ContentStringFormat="Születési idő: {0}"/>
+                        <Label Content="{Binding NAME,Converter={StaticResource FECS}}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

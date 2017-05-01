@@ -64,7 +64,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AthleteToIsEnabledConverter.cs" />
+    <Compile Include="FavExScoreConverter.cs" />
+    <Compile Include="IsPunishedToText.cs" />
     <Compile Include="LoggedInWindow.xaml.cs">
       <DependentUpon>LoggedInWindow.xaml</DependentUpon>
     </Compile>

@@ -31,13 +31,53 @@ namespace GyMaster
             InitializeComponent();
         }
        
-
+        /// <summary>
+        /// Regisztrálás
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Regisztracio_Click(object sender, RoutedEventArgs e)
         {
             RegistrationWindow rw = new RegistrationWindow();
-            rw.ShowDialog();
+            if(rw.ShowDialog()==true)
+            {
+                if (VM.BL.RegistrationCheck(rw.UjSportolo))
+                {
+                    if (rw.edzoE)
+                    {
+                        TRAINER newTrainer = new TRAINER
+                        {
+                            NAME = rw.UjSportolo.NAME,
+                            BORN_IN = rw.UjSportolo.BORN_IN,
+                            BORN_DATE = rw.UjSportolo.BORN_DATE,
+                            PASSWORD = rw.UjSportolo.PASSWORD,
+                            WEIGHT = rw.UjSportolo.WEIGHT,
+                            HEIGHT = rw.UjSportolo.HEIGHT
+                        };
+                        newTrainer.IS_PUNISHED = false;
+                        newTrainer.MEMBER_FROM = DateTime.Today.Date;                       
+                        VM.BL.addNewMember(newTrainer, VM.BL.GetAthleteRepository());
+                    }
+                    else
+                    {
+                        rw.UjSportolo.IS_PUNISHED = false;
+                        rw.UjSportolo.MEMBER_FROM = DateTime.Today.Date;
+                        VM.BL.addNewMember(rw.UjSportolo, VM.BL.GetAthleteRepository());
+                    }
+                    VM.Athletes = VM.BL.ToObservableCollection(VM.BL.GetAthleteRepository().GetAll());
+                }
+                else
+                {
+                    MessageBox.Show("Már egyszer regisztráltál!");
+                }
+            }
         }
 
+        /// <summary>
+        /// Belépés
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Belepes_Click(object sender, RoutedEventArgs e)
         {
             if (VM.BL.LoginEllenorzes(txtFelhnev.Text, pwbJelszo.Password))

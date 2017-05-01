@@ -43,15 +43,15 @@ namespace GyMaster
 
         // ----------------------------BINDING----------------------------------- //
 
-        private ATHLETE selectedAthlete;
+        private ATHLETE selectedAthlete;     
 
         public ATHLETE SelectedAthlete
         {
             get { return selectedAthlete; }
             set { selectedAthlete = value; OPC(); }
         }
-        public ATHLETE loggedInAthlete { get; set; }
-        public ATHLETE selectedAthlete { get; set; }
+       
+        public ATHLETE loggedInAthlete { get; set; }       
         public ObservableCollection<ATHLETE> Athletes { get; set; }
         public ObservableCollection<GYM> Gyms { get; set; }
         public ObservableCollection<TRAINING_PLAN> TrainingPlans { get; set; }
