@@ -9,7 +9,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-
 namespace GyMaster
 {
     /// <summary>
@@ -34,17 +33,17 @@ namespace GyMaster
             }
         }
     }
+
     /// <summary>
     /// Singleton tervezésű ViewModel az MVVM pattern implementálásához.
     /// </summary>
-    public class ViewModel:Bindable
+    public class ViewModel : Bindable
     {
         Logic bl;
 
         // ----------------------------BINDING----------------------------------- //
 
-        public ATHLETE loggedInAthlete { get; set; }     
-        public ATHLETE selectedAthlete { get; set; }               
+        public ATHLETE loggedInAthlete { get; set; }
         public ObservableCollection<ATHLETE> Athletes { get; set; }
         public ObservableCollection<GYM> Gyms { get; set; }
         public ObservableCollection<TRAINING_PLAN> TrainingPlans { get; set; }
