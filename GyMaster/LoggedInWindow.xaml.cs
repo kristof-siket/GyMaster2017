@@ -52,7 +52,8 @@ namespace GyMaster
         {
             try
             {
-                VM.BL.GenerateTrainingPlan(VM.SelectedAthlete.NAME);
+                TrainingPlanDescribeWindow tpd = new TrainingPlanDescribeWindow(VM.SelectedAthlete);
+                tpd.ShowDialog();
             }
             catch (AthleteIsPunishedException)
             {

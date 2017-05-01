@@ -45,6 +45,8 @@ namespace GyMaster
 
         private ATHLETE selectedAthlete;
 
+        public ObservableCollection<Training> TrainingList { get; set; }
+
         public ATHLETE SelectedAthlete
         {
             get { return selectedAthlete; }
