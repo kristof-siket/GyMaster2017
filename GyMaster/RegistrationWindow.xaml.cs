@@ -63,6 +63,7 @@ namespace GyMaster
             }
         }
 
+        //TODO Password binding
         private void Mentes_Click(object sender, RoutedEventArgs e)
         {
             if (chkEdzo.IsChecked == true)

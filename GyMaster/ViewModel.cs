@@ -51,6 +51,7 @@ namespace GyMaster
             set { selectedAthlete = value; OPC(); }
         }
         public ATHLETE loggedInAthlete { get; set; }
+        public ATHLETE selectedAthlete { get; set; }
         public ObservableCollection<ATHLETE> Athletes { get; set; }
         public ObservableCollection<GYM> Gyms { get; set; }
         public ObservableCollection<TRAINING_PLAN> TrainingPlans { get; set; }
