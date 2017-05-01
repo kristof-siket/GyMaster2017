@@ -35,6 +35,8 @@ namespace GyMaster
             rw.ShowDialog();
         }
 
+
+        //TODO vmiér nem látszik a változás
         private void Megbuntet_Click(object sender, RoutedEventArgs e)
         {
             if (VM.loggedInAthlete is TRAINER)
