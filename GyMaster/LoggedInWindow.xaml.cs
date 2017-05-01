@@ -39,7 +39,7 @@ namespace GyMaster
         {
             if (VM.loggedInAthlete is TRAINER)
             {
-                VM.SelectedAthlete.IS_PUNISHED = true;              
+                VM.SelectedAthlete.IS_PUNISHED = true;
             }
 
             else
@@ -50,7 +50,7 @@ namespace GyMaster
         {
             try
             {
-                VM.BL.GenerateTrainingPlan("Darnyi Tamás");
+                VM.BL.GenerateTrainingPlan(VM.SelectedAthlete.NAME);
             }
             catch (AthleteIsPunishedException)
             {
