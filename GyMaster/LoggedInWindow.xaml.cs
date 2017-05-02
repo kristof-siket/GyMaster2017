@@ -51,7 +51,8 @@ namespace GyMaster
         {
             try
             {
-                VM.BL.GenerateTrainingPlan("Darnyi Tamás");
+                TrainingPlanDescribeWindow tpd = new TrainingPlanDescribeWindow(VM.SelectedAthlete);
+                tpd.ShowDialog();
             }
             catch (AthleteIsPunishedException)
             {

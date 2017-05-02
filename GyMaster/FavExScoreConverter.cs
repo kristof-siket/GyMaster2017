@@ -33,7 +33,7 @@ namespace GyMaster
                         sumKg += (int)item.RES_KG;
                         i++;
                     }
-                    return "A kedvenc gyakorlata:" + res2.First().EXERCISE.NAME + "és hozzá tartozó eredménye:" + sumKg / i;
+                    return "A kedvenc gyakorlata:" + res2.First().EXERCISE.NAME + " és hozzá tartozó eredménye:" + sumKg / i;
                 }
                 else
                 {

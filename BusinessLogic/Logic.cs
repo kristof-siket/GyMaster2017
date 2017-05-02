@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace BusinessLogic
 {
@@ -239,7 +240,7 @@ namespace BusinessLogic
         }
 
         // ezzel csak tesztelem
-        public void GenerateTrainingPlan(string athleteName)
+        public ObservableCollection<Training> GenerateTrainingPlan(string athleteName)
         {
             Training[] edzesTomb = GenerateTrainingArray(GetAthleteRepository().GetAthleteByName(athleteName));
 
@@ -247,6 +248,51 @@ namespace BusinessLogic
             {
                 Console.WriteLine(t.Title);
             }
+            return ToObservableCollection(edzesTomb.ToList());
+        }
+
+        /// <summary>
+        /// A legenerált edzésterv pontosításához szükséges felületet összeállító metódus.
+        /// </summary>
+        /// <param name="selectedAthlete">A listából kiválasztott sportoló.</param>
+        /// <param name="g">A Grid, amelyben elhelyezzük ezt a GUI-t.</param>
+        public void BuildTrainingPlanGUI(ATHLETE selectedAthlete, Grid g)
+        {
+            Training[] edzesek = GenerateTrainingArray(selectedAthlete);
+        
+            for (int i = 0; i < 4 ; i++)
+            {
+                ColumnDefinition cd = new ColumnDefinition();
+                g.ColumnDefinitions.Add(cd);
+            }
+
+            for (int i = 0; i < edzesek.Length; i++)
+            {
+                RowDefinition rd = new RowDefinition();
+                g.RowDefinitions.Add(rd);
+            }
+
+            for (int i = 0; i < g.RowDefinitions.Count; i++)
+            {
+                Label szamlalo = new Label();
+                Label edzesNeve = new Label() {Content = edzesek[i].Title };
+                Label foGyakorlat = new Label() { Content = edzesek[i].FoGyakorlat.NAME };
+                TextBox tb = new TextBox() { TextWrapping=System.Windows.TextWrapping.NoWrap, IsEnabled=true, Visibility=System.Windows.Visibility.Visible, Width=150, Height=75, Text="Adjon leírást az edzéshez...", AcceptsReturn=true };
+                g.Children.Add(szamlalo);
+                g.Children.Add(edzesNeve);
+                g.Children.Add(foGyakorlat);
+                g.Children.Add(tb);
+                szamlalo.Content = (i + 1).ToString();
+                Grid.SetColumn(szamlalo, 0);
+                Grid.SetRow(szamlalo, i);
+                Grid.SetColumn(edzesNeve, 1);
+                Grid.SetRow(edzesNeve, i);
+                Grid.SetColumn(foGyakorlat, 2);
+                Grid.SetRow(foGyakorlat, i);
+                Grid.SetColumn(tb, 3);
+                Grid.SetRow(tb, i);
+            }
+            g.ShowGridLines = true;
         }
 
         /// <summary>
@@ -285,10 +331,4 @@ namespace BusinessLogic
 
     }
 
-    class Training
-    {
-        public string Title { get; set; }
-        public EXERCISE FoGyakorlat { get; set; }
-        public string Leiras { get; set; }
-    }
 }
