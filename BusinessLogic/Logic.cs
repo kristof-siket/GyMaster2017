@@ -14,11 +14,15 @@ namespace BusinessLogic
     {
         private GyMasterDBEntities gde;
 
+        Training[] edzesek;
+
         private AthleteRepository athleteRepo;
         private GymRepository gymRepo;
         private TrainingPlanRepository trainingPlanRepo;
         private ExerciseRepository exerciseRepo;
         private ResultRepository resultRepo;
+
+        public Training[] Edzesek { get => edzesek; set => edzesek = value; }
 
         public Logic()
         {
@@ -114,7 +118,7 @@ namespace BusinessLogic
         /// </summary>
         /// <param name="a">A sportoló, akinek a terv készül.</param>
         /// <returns>3 vagy 4 elemű Edzés-ekből álló tömb. (attól függ, hány nap edzés kell)</returns>
-        private Training[] GenerateTrainingArray(ATHLETE a)
+        public Training[] GenerateTrainingArray(ATHLETE a)
         {
             int hetiEdzesSzam;
             Training[] edzesTomb;
@@ -252,50 +256,6 @@ namespace BusinessLogic
         }
 
         /// <summary>
-        /// A legenerált edzésterv pontosításához szükséges felületet összeállító metódus.
-        /// </summary>
-        /// <param name="selectedAthlete">A listából kiválasztott sportoló.</param>
-        /// <param name="g">A Grid, amelyben elhelyezzük ezt a GUI-t.</param>
-        public void BuildTrainingPlanGUI(ATHLETE selectedAthlete, Grid g)
-        {
-            Training[] edzesek = GenerateTrainingArray(selectedAthlete);
-        
-            for (int i = 0; i < 4 ; i++)
-            {
-                ColumnDefinition cd = new ColumnDefinition();
-                g.ColumnDefinitions.Add(cd);
-            }
-
-            for (int i = 0; i < edzesek.Length; i++)
-            {
-                RowDefinition rd = new RowDefinition();
-                g.RowDefinitions.Add(rd);
-            }
-
-            for (int i = 0; i < g.RowDefinitions.Count; i++)
-            {
-                Label szamlalo = new Label();
-                Label edzesNeve = new Label() {Content = edzesek[i].Title };
-                Label foGyakorlat = new Label() { Content = edzesek[i].FoGyakorlat.NAME };
-                TextBox tb = new TextBox() { TextWrapping=System.Windows.TextWrapping.NoWrap, IsEnabled=true, Visibility=System.Windows.Visibility.Visible, Width=150, Height=75, Text="Adjon leírást az edzéshez...", AcceptsReturn=true };
-                g.Children.Add(szamlalo);
-                g.Children.Add(edzesNeve);
-                g.Children.Add(foGyakorlat);
-                g.Children.Add(tb);
-                szamlalo.Content = (i + 1).ToString();
-                Grid.SetColumn(szamlalo, 0);
-                Grid.SetRow(szamlalo, i);
-                Grid.SetColumn(edzesNeve, 1);
-                Grid.SetRow(edzesNeve, i);
-                Grid.SetColumn(foGyakorlat, 2);
-                Grid.SetRow(foGyakorlat, i);
-                Grid.SetColumn(tb, 3);
-                Grid.SetRow(tb, i);
-            }
-            g.ShowGridLines = true;
-        }
-
-        /// <summary>
         /// Ellenőrzi hogy nincs e két ugyan olyan felhasználó
         /// </summary>
         /// <param name="at">regisztrálni kívánt felhasználó</param>
@@ -305,14 +265,11 @@ namespace BusinessLogic
             var res = from x in GetAthleteRepository().GetAll()
                       where x.NAME == at.NAME && x.BORN_DATE == at.BORN_DATE
                       select x;
-            if (res.Count()!=0)
+            if (res.Count() != 0)
                 return false;
             else
                 return true;
         }
-       
-
-        //}
 
         /// <summary>
         /// Gyűjteményt alakít ObservableCollection-ná (GUI megjelenítéshez).
