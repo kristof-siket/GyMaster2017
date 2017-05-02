@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GyMaster"
         mc:Ignorable="d"
-        Title="LoggedInWindow" WindowState="Maximized">
+        Title="LoggedInWindow" WindowState="Maximized" Height="740"  >
     <Window.Resources>
         <local:IsPunishedToText x:Key="IPTT"/>
         <local:FavExScoreConverter x:Key="FECS"/>
@@ -23,12 +23,21 @@
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
-            </ListBox>
+        </ListBox>
         <Label Content="{Binding loggedInAthlete.NAME}" ContentStringFormat="Üdvözöllek {0}!" FontSize="40" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.985,0.098" Width="508" Height="69"/>
         <Button Content="Edzés kiírás" Click="Edzesterv_Click" HorizontalAlignment="Left" Margin="258,423,0,0" VerticalAlignment="Top" Width="227"/>
         <Button Content="Adatmódosítás" Click="Adatmodositas_Click" HorizontalAlignment="Left" Margin="258,448,0,0" VerticalAlignment="Top" Width="227"/>
         <Button Content="Megbüntet" HorizontalAlignment="Left" Click="Megbuntet_Click" VerticalAlignment="Top" Width="75" Margin="551,423,0,0"/>
-        <Button Content="Button" Click="Összehasonlít_Click" HorizontalAlignment="Left" Margin="137,448,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Összehasonlítás" Click="Összehasonlít_Click" HorizontalAlignment="Left" Margin="129,423,0,0" VerticalAlignment="Top" Width="93"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="1" Margin="10,490,0,0" VerticalAlignment="Top" Width="740"/>
+        <Label Content="Új értékelés hozzáadása" HorizontalAlignment="Left" Margin="247,496,0,0" VerticalAlignment="Top" Width="271" FontSize="25"/>
+        <ComboBox x:Name="cmb_gyakorlat" HorizontalAlignment="Left" ItemsSource="{Binding ExercisesList}" Margin="135,560,0,0" VerticalAlignment="Top" Width="120" Height="26"/>
+        <Label Content="Gyakorlat:" HorizontalAlignment="Left" Margin="10,556,0,0" VerticalAlignment="Top" Width="82" FontSize="15"/>
+        <Label Content="Teljesítmény(kg):" HorizontalAlignment="Left" Margin="10,591,0,0" VerticalAlignment="Top" FontSize="15"/>
+        <TextBox x:Name="txt_teljesitmeny" HorizontalAlignment="Left" Height="30" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Margin="135,591,0,0"/>
+        <Label Content="Listában nem szerepel kérem adja meg:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="260,556,0,0" Height="32" FontSize="15"/>
+        <TextBox x:Name="txt_Gyakorlat" HorizontalAlignment="Left" Height="30" Margin="536,560,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Hozzáad" Click="Hozzaad_Cick" HorizontalAlignment="Left" Margin="307,661,0,0" VerticalAlignment="Top" Width="75"/>
 
     </Grid>
 </Window>

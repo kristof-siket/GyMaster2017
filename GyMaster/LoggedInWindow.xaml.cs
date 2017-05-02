@@ -66,8 +66,30 @@ namespace GyMaster
 
         private void Összehasonlít_Click(object sender, RoutedEventArgs e)
         {
-            Graph g = new Graph();
-            g.Show();
+            if (VM.SelectedAthlete != null)
+            {
+                Graph g = new Graph();
+                g.Show();
+            }
+            else
+            {
+                MessageBox.Show("Válasszál ki valakit hogy össze tudjunk hasonlítani vele!");
+            }
+        }
+
+        private void Hozzaad_Cick(object sender, RoutedEventArgs e)
+        {
+            if(cmb_gyakorlat.SelectedItem==null)
+            {
+                EXERCISE ex = new EXERCISE{ NAME = txt_Gyakorlat.Text, ID = 100+VM.BL.GetExerciseRepository().GetAll().Count() + 1 };
+                VM.BL.GetExerciseRepository().Insert(ex);
+                VM.BL.GetResultRepository().Insert(new RESULT { ATHLETE = VM.loggedInAthlete, RES_KG = int.Parse(txt_teljesitmeny.Text), EXERCISE = ex,EX_ID=ex.ID,ATHLETE_ID=VM.loggedInAthlete.ID});
+            }
+            else
+            {
+                EXERCISE ex = VM.BL.GetExerciseByName(cmb_gyakorlat.SelectedItem.ToString());
+                VM.BL.GetResultRepository().Insert(new RESULT { ATHLETE = VM.loggedInAthlete, RES_KG = int.Parse(txt_teljesitmeny.Text), EXERCISE = ex, EX_ID = ex.ID, ATHLETE_ID = VM.loggedInAthlete.ID });
+            }
         }
     }
 }

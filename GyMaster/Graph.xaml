@@ -5,10 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GyMaster"
         mc:Ignorable="d"
-        Title="Graph" Height="475" Width="554" Loaded="Window_Loaded">
+        Title="Graph" Height="577" Width="664" Loaded="Window_Loaded">
     <Grid>
 
-        <Canvas Name="canGraph" Background="White" Width="400" Height="350" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="21,10,21,9"/>
-        <ComboBox x:Name="cmb_selected" HorizontalAlignment="Left" ItemsSource="{Binding SelectedAthlete.RESULT.EXERSISE.NAME}" Margin="10,10,0,0" VerticalAlignment="Top" Width="120"/>
+        <Canvas Name="canGraph" Background="White" Width="442" Height="384" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="143,72,71,90"/>
+        <ComboBox x:Name="cmb_selected" HorizontalAlignment="Left" ItemsSource="{Binding SelectedAthleteExercises}" Margin="143,45,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.5,1.318"/>
+        <ComboBox x:Name="cmb_loggedin" HorizontalAlignment="Left" ItemsSource="{Binding LoggedInAthleteExercises}" Margin="465,45,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Kirajzol" Click="Kirajzol_Click" HorizontalAlignment="Left" Margin="289,487,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="-0.347,0"/>
+        <Label Content="{Binding loggedInAthlete.NAME}" HorizontalAlignment="Left" Margin="429,20,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding SelectedAthlete.NAME}" HorizontalAlignment="Left" Margin="107,20,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.184,0.308"/>
+        <Label Content="{Binding loggedInAthlete.NAME}" ContentStringFormat="Kék: {0}" HorizontalAlignment="Left" Margin="10,156,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding SelectedAthlete.NAME}" ContentStringFormat="Piros: {0}" Margin="10,113,554,395"/>
     </Grid>
 </Window>
