@@ -126,7 +126,7 @@ namespace BusinessLogic
             if (a.IS_PUNISHED != null && !(bool)a.IS_PUNISHED)
             {
                 // először megnézzük, mióta edz (mióta tag), ha 1 év vagy annál több, akkor heti 4 edzés, ha kevesebb, akkor csak 3
-                if ((DateTime.Now.Year - a.MEMBER_FROM.Value.Year) <= 2)
+                if ((DateTime.Now.Year - a.MEMBER_FROM.Value.Year) <= 3)
                     hetiEdzesSzam = 3;
                 else
                     hetiEdzesSzam = 4;
