@@ -6,8 +6,7 @@
         xmlns:local="clr-namespace:GyMaster"
         mc:Ignorable="d"
         Title="Edzések leírása" Height="600" Width="800"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterScreen">
     <Grid Margin="20">
-
     </Grid>
 </Window>
