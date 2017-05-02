@@ -8,6 +8,7 @@ using Data;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 
 namespace GyMaster
 {
@@ -43,9 +44,60 @@ namespace GyMaster
 
         // ----------------------------BINDING----------------------------------- //
 
-        private ATHLETE selectedAthlete;     
+        private ATHLETE selectedAthlete;
+        private List<string> selectedathleteExercises;
+        private List<string> loggedinathleteExercises;
+        private List<string> exercises;
 
         public ObservableCollection<Training> TrainingList { get; set; }
+
+
+        public List<string> ExercisesList
+        {
+            get
+            {
+                exercises = new List<string>();
+                foreach(EXERCISE ex in bl.GetExerciseRepository().GetAll())
+                {
+                    exercises.Add(ex.NAME);
+                }
+                return exercises;
+            }
+        }
+        public List<string> SelectedAthleteExercises
+        {
+            get
+            {
+                selectedathleteExercises = new List<string>();               
+                {
+                    foreach (RESULT res in selectedAthlete.RESULT)
+                    {
+                        if (!selectedathleteExercises.Contains(res.EXERCISE.NAME))
+                            selectedathleteExercises.Add(res.EXERCISE.NAME);
+                    }
+                    return selectedathleteExercises;
+                }
+               
+            }
+        }
+
+        public List<string> LoggedInAthleteExercises
+        {
+            get
+            {
+                loggedinathleteExercises = new List<string>();
+                {
+                    foreach (RESULT res in loggedInAthlete.RESULT)
+                    {
+                        if (!loggedinathleteExercises.Contains(res.EXERCISE.NAME))
+                            loggedinathleteExercises.Add(res.EXERCISE.NAME);
+                    }
+                    return loggedinathleteExercises;
+                }
+
+            }
+        }
+
 
         public ATHLETE SelectedAthlete
         {

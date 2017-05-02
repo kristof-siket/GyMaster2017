@@ -310,6 +310,15 @@ namespace BusinessLogic
             else
                 return true;
         }
+
+        public EXERCISE GetExerciseByName(string name)
+        {
+            var res = from x in GetExerciseRepository().GetAll()
+                      where x.NAME == name
+                      select x;
+            EXERCISE ex = res.First();
+            return ex;
+        }
        
 
         //}
