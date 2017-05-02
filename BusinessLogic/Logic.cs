@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace BusinessLogic
 {
@@ -258,7 +259,7 @@ namespace BusinessLogic
         public void BuildTrainingPlanGUI(ATHLETE selectedAthlete, Grid g)
         {
             Training[] edzesek = GenerateTrainingArray(selectedAthlete);
-
+        
             for (int i = 0; i < 4 ; i++)
             {
                 ColumnDefinition cd = new ColumnDefinition();
@@ -276,7 +277,7 @@ namespace BusinessLogic
                 Label szamlalo = new Label();
                 Label edzesNeve = new Label() {Content = edzesek[i].Title };
                 Label foGyakorlat = new Label() { Content = edzesek[i].FoGyakorlat.NAME };
-                TextBox tb = new TextBox() { Name = "txtLeiras", Height=40, TextWrapping=System.Windows.TextWrapping.Wrap };
+                TextBox tb = new TextBox() { TextWrapping=System.Windows.TextWrapping.NoWrap, IsEnabled=true, Visibility=System.Windows.Visibility.Visible, Width=150, Height=75, Text="Adjon leírást az edzéshez...", AcceptsReturn=true };
                 g.Children.Add(szamlalo);
                 g.Children.Add(edzesNeve);
                 g.Children.Add(foGyakorlat);
@@ -291,62 +292,25 @@ namespace BusinessLogic
                 Grid.SetColumn(tb, 3);
                 Grid.SetRow(tb, i);
             }
+            g.ShowGridLines = true;
         }
 
-        //public static void GUIBuild(ATHLETE loggedInAthlete, Grid g)
-        //{
-        //    int i = 1;
-
-
-        //    for (int j = 0; j < 5; j++)
-        //    {
-        //        ColumnDefinition cd = new ColumnDefinition();
-        //        g.ColumnDefinitions.Add(cd);
-        //    }
-        //    RowDefinition rdf = new RowDefinition();
-        //    g.RowDefinitions.Add(rdf);
-        //    Label loggedName = new Label();
-        //    loggedName.Content = loggedInAthlete.NAME;
-        //    loggedName.FontSize = 30;
-        //    Label loggedHeight = new Label();
-        //    loggedHeight.Content = loggedInAthlete.HEIGHT;
-        //    loggedHeight.FontSize = 30;
-        //    Label loggedWeight = new Label();
-        //    loggedWeight.Content = loggedInAthlete.WEIGHT;
-        //    loggedWeight.FontSize = 30;
-        //    g.Children.Add(loggedName);
-        //    g.Children.Add(loggedHeight);
-        //    g.Children.Add(loggedWeight);
-        //    Grid.SetColumn(loggedName, 0);
-        //    Grid.SetRow(loggedName, 0);
-        //    Grid.SetColumn(loggedHeight, 1);
-        //    Grid.SetRow(loggedHeight, 0);
-        //    Grid.SetColumn(loggedWeight, 2);
-        //    Grid.SetRow(loggedWeight, 0);
-
-        //    foreach (ATHLETE a in athleteRepo.GetAll().ToList())
-        //    {
-        //        RowDefinition rd = new RowDefinition();
-        //        g.RowDefinitions.Add(rd);
-        //        Label name = new Label();
-        //        Label height = new Label();
-        //        Label age = new Label();
-        //        Label weight = new Label();
-        //        name.Content = a.NAME;
-        //        height.Content = a.HEIGHT;
-        //        weight.Content = a.WEIGHT;
-        //        g.Children.Add(name);
-        //        g.Children.Add(height);
-        //        g.Children.Add(weight);
-        //        Grid.SetColumn(name, 0);
-        //        Grid.SetRow(name, i);
-        //        Grid.SetColumn(height, 1);
-        //        Grid.SetRow(height, i);
-        //        Grid.SetColumn(weight, 2);
-        //        Grid.SetRow(weight, i);
-        //        i++;
-        //    }
-
+        /// <summary>
+        /// Ellenőrzi hogy nincs e két ugyan olyan felhasználó
+        /// </summary>
+        /// <param name="at">regisztrálni kívánt felhasználó</param>
+        /// <returns></returns>
+        public bool RegistrationCheck(ATHLETE at)
+        {
+            var res = from x in GetAthleteRepository().GetAll()
+                      where x.NAME == at.NAME && x.BORN_DATE == at.BORN_DATE
+                      select x;
+            if (res.Count()!=0)
+                return false;
+            else
+                return true;
+        }
+       
 
         //}
 

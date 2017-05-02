@@ -31,17 +31,16 @@ namespace GyMaster
 
         private void Adatmodositas_Click(object sender, RoutedEventArgs e)
         {
-            RegistrationWindow rw = new RegistrationWindow(true);
-            rw.ShowDialog();
+            (new RegistrationWindow(true)).ShowDialog();
         }
 
 
-        //TODO vmiér nem látszik a változás
+        //TODO már jó de valamiér csak egy legörgetés után látszódik
         private void Megbuntet_Click(object sender, RoutedEventArgs e)
         {
             if (VM.loggedInAthlete is TRAINER)
             {
-                VM.SelectedAthlete.IS_PUNISHED = true;
+                VM.SelectedAthlete.IS_PUNISHED = true;                        
             }
 
             else

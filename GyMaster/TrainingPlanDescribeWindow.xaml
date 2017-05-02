@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GyMaster"
         mc:Ignorable="d"
-        Title="TrainingPlanDescribeWindow" Height="300" Width="300">
-    <Grid>
-        
+        Title="Edzések leírása" Height="600" Width="800"
+        WindowStartupLocation="CenterOwner">
+    <Grid Margin="20">
+
     </Grid>
 </Window>

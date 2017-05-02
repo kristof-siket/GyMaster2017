@@ -22,7 +22,10 @@ namespace GyMaster
     public partial class RegistrationWindow : Window
     {
         ViewModel VM;
+        public bool edzoE { get; set; }
         public ATHLETE UjSportolo { get; private set; }
+        
+       
         public RegistrationWindow(bool mod=false)
         {
             VM = ViewModel.Get();
@@ -41,6 +44,11 @@ namespace GyMaster
             
         }
 
+        /// <summary>
+        /// Csak szöveget írhat
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void szovegPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             foreach (char ch in e.Text)
@@ -52,6 +60,11 @@ namespace GyMaster
             }
         }
 
+        /// <summary>
+        /// Csak számot írhat
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void szamPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             foreach (char ch in e.Text)
@@ -63,41 +76,38 @@ namespace GyMaster
             }
         }
 
-        //TODO Password binding
+        /// <summary>
+        /// Módosítás ill. regisztráció esetén ment
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Mentes_Click(object sender, RoutedEventArgs e)
         {
-            if (chkEdzo.IsChecked == true)
+            txtMagassag.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            txtNev.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            txtSuly.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            txtSzulHely.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            dpSzulDatum.GetBindingExpression(DatePicker.SelectedDateProperty).UpdateSource();
+            if(chkEdzo.IsChecked==true)
             {
-                UjSportolo = new TRAINER
-                {
-                    BORN_DATE = null,
-                    NAME = txtNev.Text,
-                    HEIGHT = int.Parse(txtMagassag.Text),
-                    WEIGHT = int.Parse(txtSuly.Text),
-                    ID = VM.BL.GetAthleteRepository().GetAll().Count() + 1,
-                    PASSWORD = psdJelszo.Password
-                };
-            }
-
-            else
-            {
-                UjSportolo = new ATHLETE
-                {
-                    BORN_DATE = null,
-                    NAME = txtNev.Text,
-                    HEIGHT = int.Parse(txtMagassag.Text),
-                    WEIGHT = int.Parse(txtSuly.Text),
-                    ID = VM.BL.GetAthleteRepository().GetAll().Count() + 1,
-                    PASSWORD = psdJelszo.Password
-                };
-            }
-
+                edzoE = true;
+            }                                           
             this.DialogResult = true;
-            //txtNev.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-            //txtMagassag.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-            //txtSuly.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-            //txtSzulHely.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-            //psdJelszo.GetBindingExpression(PasswordBox)
+            
+        }
+
+
+        /// <summary>
+        /// Jelszó változás esetén megadja az új jelszót
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Password_changed(object sender, RoutedEventArgs e)
+        {
+            if (UjSportolo != null)
+                UjSportolo.PASSWORD = psdJelszo.Password;
+            else
+                VM.loggedInAthlete.PASSWORD = psdJelszo.Password;
         }
     }
 }
