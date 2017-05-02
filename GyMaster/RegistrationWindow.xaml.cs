@@ -24,8 +24,7 @@ namespace GyMaster
         ViewModel VM;
         public bool edzoE { get; set; }
         public ATHLETE UjSportolo { get; private set; }
-        
-       
+                    
         public RegistrationWindow(bool mod=false)
         {
             VM = ViewModel.Get();
@@ -33,7 +32,16 @@ namespace GyMaster
             InitializeComponent();
             if(mod)
             {
-                VM = ViewModel.Get();
+                if((VM.loggedInAthlete is TRAINER))
+                {
+                    chkEdzo.IsChecked = true;
+                }
+                else
+                {
+                    chkEdzo.IsChecked = false;
+                }
+                chkEdzo.IsEnabled = false;
+                VM = ViewModel.Get();                
                 DataContext = VM.loggedInAthlete;
             }
             else
@@ -55,7 +63,7 @@ namespace GyMaster
             {
                 if (!Char.IsLetter(ch))
                 {
-                    e.Handled = true;
+                    e.Handled = true;                    
                 }
             }
         }

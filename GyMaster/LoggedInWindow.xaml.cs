@@ -62,5 +62,11 @@ namespace GyMaster
                 MessageBox.Show("A rendszer nem tud edzéstervet generálni ennek a sportolónak!");
             }
         }
+
+        private void Összehasonlít_Click(object sender, RoutedEventArgs e)
+        {
+            Graph g = new Graph();
+            g.Show();
+        }
     }
 }
