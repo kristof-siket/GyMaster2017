@@ -98,7 +98,6 @@ namespace GyMaster
             }
         }
 
-
         public ATHLETE SelectedAthlete
         {
             get { return selectedAthlete; }
