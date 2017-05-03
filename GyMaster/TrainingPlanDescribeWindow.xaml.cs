@@ -23,7 +23,7 @@ namespace GyMaster
         ViewModel VM;
         public TrainingPlanDescribeWindow(ATHLETE selectedAthlete)
         {
-
+            this.Background = Brushes.LightGray;
             VM = ViewModel.Get();
             this.DataContext = VM;
             InitializeComponent();
@@ -57,7 +57,7 @@ namespace GyMaster
                 Label szamlalo = new Label();
                 Label edzesNeve = new Label() { Content = VM.BL.Edzesek[i].Title };
                 Label foGyakorlat = new Label() { Content = VM.BL.Edzesek[i].FoGyakorlat.NAME };
-                TextBox tb = new TextBox() { TextWrapping = System.Windows.TextWrapping.NoWrap, IsEnabled = true, Visibility = System.Windows.Visibility.Visible, Width = 150, Height = 75, Text = "Adjon leírást az edzéshez...", AcceptsReturn = true };
+                TextBox tb = new TextBox() {Foreground=Brushes.LightSkyBlue, Background=Brushes.DarkGray, TextWrapping = System.Windows.TextWrapping.NoWrap, IsEnabled = true, Visibility = System.Windows.Visibility.Visible, Width = 150, Height = 75, Text = "Adjon leírást az edzéshez...", AcceptsReturn = true };
                 tbs.Add(tb);
                 g.Children.Add(szamlalo);
                 g.Children.Add(edzesNeve);
@@ -75,7 +75,7 @@ namespace GyMaster
             }
             g.ShowGridLines = true;
             g.RowDefinitions.Add(new RowDefinition()); // +1 sor a gombnak
-            Button btn_Kesz = new Button() { Content = "Kész!", Visibility = System.Windows.Visibility.Visible, Name = "btn_Kesz", FontSize = 40 };
+            Button btn_Kesz = new Button() {Background=Brushes.LightSkyBlue, Content = "Kész!", Visibility = System.Windows.Visibility.Visible, Name = "btn_Kesz", FontSize = 40 };
             Grid.SetRow(btn_Kesz, (g.RowDefinitions.Count == 4) ? 3 : 4); // ha összesen 4 sor van, akkor a 4.be, ha 5, akkor az 5.be (de ugye 0-tól indul)
             Grid.SetColumn(btn_Kesz, 1);
             Grid.SetColumnSpan(btn_Kesz, 2);
