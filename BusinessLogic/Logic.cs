@@ -26,8 +26,14 @@ namespace BusinessLogic
         private ExerciseRepository exerciseRepo;
         private ResultRepository resultRepo;
 
+        /// <summary>
+        /// Aktuálisan legenerált edzéstömböt tárolja.
+        /// </summary>
         public Training[] Edzesek { get => edzesek; set => edzesek = value; }
 
+        /// <summary>
+        /// Az üzleti logika.
+        /// </summary>
         public Logic()
         {
             gde = DatabaseEntityProvider.GetDatabaseEntities();
@@ -297,7 +303,11 @@ namespace BusinessLogic
             return Path.GetFileName(path);
         }
 
-        // ezzel csak tesztelem
+        /// <summary>
+        /// Elkészíti az edzéstervet, azt betölti a többi közé, felhasználva az xls-készítő, és az edzésterv generátor logikát.
+        /// </summary>
+        /// <param name="a">A sportoló, akinek az edzésterv készül.</param>
+        /// <returns>Az edzésterv példány.</returns>
         public TRAINING_PLAN GenerateTrainingPlan(ATHLETE a)
         {
             string filename = CreateExcelFromTrainingArray(this.Edzesek);
@@ -320,8 +330,6 @@ namespace BusinessLogic
                 return true;
         }
 
-
-
         /// <summary>
         /// Gyűjteményt alakít ObservableCollection-ná (GUI megjelenítéshez).
         /// </summary>
@@ -334,6 +342,9 @@ namespace BusinessLogic
         }
     }
 
+    /// <summary>
+    /// Akkor dobjuk, ha a sportoló büntetett állapotára akarunk hivatkozni.
+    /// </summary>
     public class AthleteIsPunishedException : Exception
     {
 
