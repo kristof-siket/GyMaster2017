@@ -21,10 +21,25 @@ namespace GyMaster
     /// </summary>
     public partial class RegistrationWindow : Window
     {
+        /// <summary>
+        /// Viewmodel példány
+        /// </summary>
         ViewModel VM;
+
+        /// <summary>
+        /// edzoE property
+        /// </summary>
         public bool edzoE { get; set; }
+
+        /// <summary>
+        /// Regisztráció során létrejött új sportoló
+        /// </summary>
         public ATHLETE UjSportolo { get; private set; }
                     
+        /// <summary>
+        /// RegistrationWindow konstruktora
+        /// </summary>
+        /// <param name="mod">ha módosítunk egy sportolót true ha hozzáadunk false</param>
         public RegistrationWindow(bool mod=false)
         {
             VM = ViewModel.Get();

@@ -9,8 +9,19 @@ using System.Windows.Data;
 
 namespace GyMaster
 {
+    /// <summary>
+    /// Kedvenc gyakorlat alapján visszaadja a hozzá tartozó legjobb pontszámot is
+    /// </summary>
     public class FavExScoreConverter : IValueConverter
     {
+        /// <summary>
+        /// Kedvenc gyakorlatot konvertálja hozzá tartozó eredményhez
+        /// </summary>
+        /// <param name="value">érték objektum</param>
+        /// <param name="targetType">cél típus</param>
+        /// <param name="parameter">paraméter objektum</param>
+        /// <param name="culture">culture info</param>
+        /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             ViewModel VM = ViewModel.Get();
@@ -46,6 +57,14 @@ namespace GyMaster
             }
         }
 
+        /// <summary>
+        /// Nincs használva
+        /// </summary>
+        /// <param name="value">érték objektum</param>
+        /// <param name="targetType">cél típus</param>
+        /// <param name="parameter">paraméter objektum</param>
+        /// <param name="culture">culture info</param>
+        /// <returns></returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();

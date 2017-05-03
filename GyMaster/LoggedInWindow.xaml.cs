@@ -21,7 +21,15 @@ namespace GyMaster
     /// </summary>
     public partial class LoggedInWindow : Window
     {
+        /// <summary>
+        /// Viewmodel példány
+        /// </summary>
         ViewModel VM;
+
+        /// <summary>
+        /// LoggedInWindow ablak konstruktora
+        /// </summary>
+        /// <param name="loggedIn">bejelentkezett sportoló</param>
         public LoggedInWindow(ATHLETE loggedIn)
         {
             VM = ViewModel.Get();
@@ -29,6 +37,11 @@ namespace GyMaster
             this.DataContext = VM;
         }
 
+        /// <summary>
+        /// Adatmódosítás gomb "click" eseménykezelője
+        /// </summary>
+        /// <param name="sender">küldő objektum</param>
+        /// <param name="e">esemény paraméterek</param>
         private void Adatmodositas_Click(object sender, RoutedEventArgs e)
         {
             (new RegistrationWindow(true)).ShowDialog();
@@ -36,6 +49,11 @@ namespace GyMaster
 
 
         //TODO már jó de valamiér csak egy legörgetés után látszódik
+        /// <summary>
+        /// Megbüntet gomb "click" eseménykezelője
+        /// </summary>
+        /// <param name="sender">küldő objektum</param>
+        /// <param name="e">esemény paraméterek</param>
         private void Megbuntet_Click(object sender, RoutedEventArgs e)
         {
             if (VM.loggedInAthlete is TRAINER)
@@ -47,6 +65,11 @@ namespace GyMaster
                 MessageBox.Show("Nem büntetheted meg mivel, Te nem vagy edző!");
         }
 
+        /// <summary>
+        /// Edzésterv gomb "click" eseménykezelője
+        /// </summary>
+        /// <param name="sender">küldő objektum</param>
+        /// <param name="e">esemény paraméterek</param>
         private void Edzesterv_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -64,6 +87,11 @@ namespace GyMaster
             }
         }
 
+        /// <summary>
+        /// Összehasonlít gomb "click" eseménykezelője
+        /// </summary>
+        /// <param name="sender">küldő objektum</param>
+        /// <param name="e">esemény paraméterek</param>
         private void Összehasonlít_Click(object sender, RoutedEventArgs e)
         {
             if (VM.SelectedAthlete != null)
@@ -77,6 +105,11 @@ namespace GyMaster
             }
         }
 
+        /// <summary>
+        /// Hozzáad gomb "click" eseménykezelője
+        /// </summary>
+        /// <param name="sender">küldő objektum</param>
+        /// <param name="e">esemény paraméterek</param>
         private void Hozzaad_Cick(object sender, RoutedEventArgs e)
         {
             if(cmb_gyakorlat.SelectedItem==null)

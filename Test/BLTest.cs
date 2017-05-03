@@ -5,6 +5,7 @@ using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace Test
     {
         Mock<IRepository<ATHLETE>> m;
         Logic l;
+        ObservableCollection<ATHLETE> oc;
         [OneTimeSetUp]
         public void SetUp()
         {
@@ -30,6 +32,9 @@ namespace Test
                 new ATHLETE(){NAME="Valaki5",HEIGHT=164,WEIGHT=110,ID=5,PASSWORD="asd",BORN_DATE=new DateTime(2010,12,17)}
             };
             m.Setup(x => x.GetAll()).Returns(ATHLETES.AsQueryable());
+            oc = new ObservableCollection<ATHLETE>();
+                
+            
         }
 
         [Test]
@@ -49,11 +54,16 @@ namespace Test
             Assert.That(l.RegistrationCheck(a1, m.Object), Is.EqualTo(false));
             Assert.That(l.RegistrationCheck(a2, m.Object), Is.EqualTo(true));
         }
+             
 
-        public void InsertTest()
+        [Test]
+        public void ToObservableCollectionTest()
         {
-
+            Assert.That(l.ToObservableCollection(m.Object.GetAll()), Is.TypeOf(oc.GetType()));
         }
+
+
+
 
     }
 }

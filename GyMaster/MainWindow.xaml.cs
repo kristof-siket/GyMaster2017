@@ -23,7 +23,14 @@ namespace GyMaster
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// Viewmodel példány
+        /// </summary>
         ViewModel VM;
+
+        /// <summary>
+        /// MainWindow konstruktora
+        /// </summary>
         public MainWindow()
         {
             VM = ViewModel.Get();

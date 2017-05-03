@@ -18,16 +18,44 @@ namespace BusinessLogic
     {
         private GyMasterDBEntities gde;
 
+        /// <summary>
+        /// Edzés tömb
+        /// </summary>
         Training[] edzesek;
 
+        /// <summary>
+        /// Athlete repository
+        /// </summary>
         private AthleteRepository athleteRepo;
+
+        /// <summary>
+        /// Gym repository
+        /// </summary>
         private GymRepository gymRepo;
+
+        /// <summary>
+        /// Edzésterv repository
+        /// </summary>
         private TrainingPlanRepository trainingPlanRepo;
+
+        /// <summary>
+        /// Gyakorlatok repository
+        /// </summary>
         private ExerciseRepository exerciseRepo;
+
+        /// <summary>
+        /// Eredmények repository
+        /// </summary>
         private ResultRepository resultRepo;
 
+        /// <summary>
+        /// Edzések tömb propertyje
+        /// </summary>
         public Training[] Edzesek { get => edzesek; set => edzesek = value; }
 
+        /// <summary>
+        /// Business logic konstruktora
+        /// </summary>
         public Logic()
         {
             gde = DatabaseEntityProvider.GetDatabaseEntities();
@@ -97,7 +125,7 @@ namespace BusinessLogic
         /// </summary>
         /// <param name="at">A hozzáadandó sportoló.</param>
         /// <param name="ar">Az ATHLETE objektumokhoz való hozzáférést kezelő repository.</param>
-        public void addNewMember(ATHLETE at,AthleteRepository ar)
+        public void addNewMember(ATHLETE at,IRepository<ATHLETE> ar)
         {
             //ATHLETE at = new ATHLETE { NAME = name, PASSWORD = password };           
            ar.Insert(at);                    
@@ -334,6 +362,9 @@ namespace BusinessLogic
         }
     }
 
+    /// <summary>
+    /// Sérült sportoló kivétel
+    /// </summary>
     public class AthleteIsPunishedException : Exception
     {
 

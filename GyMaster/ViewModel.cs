@@ -1,10 +1,10 @@
-﻿using System;
+﻿using BusinessLogic;
+using Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BusinessLogic;
-using Data;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -40,6 +40,9 @@ namespace GyMaster
     /// </summary>
     public class ViewModel : Bindable
     {
+        /// <summary>
+        /// Logic példány
+        /// </summary>
         Logic bl;
 
         // ----------------------------BINDING----------------------------------- //
@@ -51,7 +54,9 @@ namespace GyMaster
 
         public ObservableCollection<Training> TrainingList { get; set; }
 
-
+        /// <summary>
+        /// Exercise listát visszaadó property
+        /// </summary>
         public List<string> ExercisesList
         {
             get
@@ -64,6 +69,10 @@ namespace GyMaster
                 return exercises;
             }
         }
+
+        /// <summary>
+        /// Kiválasztott atléta gyakorlatait visszaadó lista
+        /// </summary>
         public List<string> SelectedAthleteExercises
         {
             get
@@ -81,6 +90,9 @@ namespace GyMaster
             }
         }
 
+        /// <summary>
+        /// Bejelentkezett felhasználó gyakorlatait visszaadó lista
+        /// </summary>
         public List<string> LoggedInAthleteExercises
         {
             get
@@ -98,28 +110,60 @@ namespace GyMaster
             }
         }
 
-
+        /// <summary>
+        /// Kiválasztott atléta property
+        /// </summary>
         public ATHLETE SelectedAthlete
         {
             get { return selectedAthlete; }
             set { selectedAthlete = value; OPC(); }
         }
        
-        public ATHLETE loggedInAthlete { get; set; }       
+        /// <summary>
+        /// Bejelentkezett sportolót visszaadó property
+        /// </summary>
+        public ATHLETE loggedInAthlete { get; set; }
+
+        /// <summary>
+        /// Sportolókat tartalmazó ObservableCollectiont visszaadó property
+        /// </summary>
         public ObservableCollection<ATHLETE> Athletes { get; set; }
+
+        /// <summary>
+        /// Konditermeket tartalmazó ObservableCollectiont visszaadó property
+        /// </summary>
         public ObservableCollection<GYM> Gyms { get; set; }
+
+        /// <summary>
+        /// Edzésterveket tartalmazó ObservableCollectiont visszaadó property
+        /// </summary>
         public ObservableCollection<TRAINING_PLAN> TrainingPlans { get; set; }
+
+        /// <summary>
+        /// Gyakorlatokat tartalmazó ObservableCollectiont visszaadó property
+        /// </summary>
         public ObservableCollection<EXERCISE> Exercises { get; set; }
+
+        /// <summary>
+        /// Eredményeket tartalmazó ObservableCollectiont visszaadó property
+        /// </summary>
         public ObservableCollection<RESULT> Results { get; set; }
 
         // ----------------------------END BINDING----------------------------------- //
 
+        
+        /// <summary>
+        /// Logic konstruktora
+        /// </summary>
         public Logic BL
         {
             get { return bl; }
             private set { bl = value; }
         }
 
+        /// <summary>
+        /// Egyetlen viewmodel példány
+        /// </summary>
         private static ViewModel _peldany;
 
         /// <summary>
@@ -133,6 +177,9 @@ namespace GyMaster
             return _peldany;
         }
 
+        /// <summary>
+        /// Viewmodel konstruktor
+        /// </summary>
         private ViewModel()
         {
             bl = new Logic();

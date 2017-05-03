@@ -20,7 +20,14 @@ namespace GyMaster
     /// </summary>
     public partial class Graph : Window
     {
+        /// <summary>
+        /// Viewmodel példány
+        /// </summary>
         ViewModel VM;
+
+        /// <summary>
+        /// Graph ablak konstruktora
+        /// </summary>
         public Graph()
         {
             VM = ViewModel.Get();
@@ -28,6 +35,11 @@ namespace GyMaster
             InitializeComponent();           
         }
 
+        /// <summary>
+        /// Windows loaded esemény
+        /// </summary>
+        /// <param name="sender">küldő objektum</param>
+        /// <param name="e">esemény paraméterek</param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             const double margin = 30;
@@ -67,6 +79,11 @@ namespace GyMaster
             canGraph.Children.Add(yaxis_path);
         }
 
+        /// <summary>
+        /// Kirajzol "click" eseménykezelője
+        /// </summary>
+        /// <param name="sender">küldő objektum</param>
+        /// <param name="e">esemény paraméterek</param>
         private void Kirajzol_Click(object sender, RoutedEventArgs e)
         {
             if (cmb_selected.SelectedItem != null && cmb_loggedin.SelectedItem != null)

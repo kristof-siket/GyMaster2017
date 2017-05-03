@@ -9,8 +9,19 @@ using System.Windows.Data;
 
 namespace GyMaster
 {
+    /// <summary>
+    /// Büntetés szöveggé konvertálása
+    /// </summary>
     public class IsPunishedToText : IValueConverter
     {
+        /// <summary>
+        /// Attól függően hogy meg van e büntetve visszaad szöveget
+        /// </summary>
+        /// <param name="value">érték objektum</param>
+        /// <param name="targetType">cél típus</param>
+        /// <param name="parameter">paraméter objektum</param>
+        /// <param name="culture">culture info</param>
+        /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
                         
@@ -24,6 +35,14 @@ namespace GyMaster
             }
         }
 
+        /// <summary>
+        /// Nincs használva
+        /// </summary>
+        /// <param name="value">érték objektum</param>
+        /// <param name="targetType">cél típus</param>
+        /// <param name="parameter">paraméter objektum</param>
+        /// <param name="culture">culture info</param>
+        /// <returns></returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
