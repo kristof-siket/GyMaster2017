@@ -23,6 +23,7 @@ namespace GyMaster
         ViewModel VM;
         public TrainingPlanDescribeWindow(ATHLETE selectedAthlete)
         {
+
             VM = ViewModel.Get();
             this.DataContext = VM;
             InitializeComponent();
@@ -85,6 +86,8 @@ namespace GyMaster
                     VM.BL.Edzesek[i].Leiras = tbs[i].Text;
                 }
                 MessageBox.Show("Az edzésterv sikeresen elkészült!");
+                TRAINING_PLAN tp  = VM.BL.GenerateTrainingPlan(selectedAthlete);
+                VM.BL.GetTrainingPlanRepository().Insert(tp);
                 this.Close();
             };
             g.Children.Add(btn_Kesz);

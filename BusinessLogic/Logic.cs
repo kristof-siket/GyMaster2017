@@ -1,12 +1,15 @@
 ﻿using Data;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace BusinessLogic
 {
@@ -243,16 +246,61 @@ namespace BusinessLogic
                 throw new AthleteIsPunishedException(); // ezt a hívás helyén kell majd elkapni
         }
 
-        // ezzel csak tesztelem
-        public ObservableCollection<Training> GenerateTrainingPlan(string athleteName)
+        private string CreateExcelFromTrainingArray(Training[] trainings)
         {
-            Training[] edzesTomb = GenerateTrainingArray(GetAthleteRepository().GetAthleteByName(athleteName));
+            var excelApp = new Excel.Application();
+            excelApp.Workbooks.Add();
+            Excel._Worksheet workSheet = (Excel.Worksheet)excelApp.ActiveSheet;
+            workSheet.Cells[1, "A"] = "Sorszám";
+            workSheet.Cells[1, "B"] = "Edzés neve";
+            workSheet.Cells[1, "C"] = "Fő gyakorlat";
+            workSheet.Cells[1, "D"] = "Leírás";
 
-            foreach (Training t in edzesTomb)
+            int row = 1;
+            foreach (Training t in trainings)
             {
-                Console.WriteLine(t.Title);
+                row++;
+                workSheet.Cells[row, "A"] = row - 1;
+                workSheet.Cells[row, "B"] = t.Title;
+                workSheet.Cells[row, "C"] = t.FoGyakorlat.NAME;
+                workSheet.Cells[row, "D"] = t.Leiras;
             }
-            return ToObservableCollection(edzesTomb.ToList());
+            workSheet.Columns[1].AutoFit();
+            workSheet.Columns[2].AutoFit();
+            workSheet.Columns[3].AutoFit();
+            workSheet.Columns[4].ColumnWidth = 30;
+
+            workSheet.Rows[1].AutoFit();
+            workSheet.Rows[2].AutoFit();
+            workSheet.Rows[3].AutoFit();
+            workSheet.Rows[4].AutoFit();
+
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.InitialDirectory = @"C:\";
+            sfd.RestoreDirectory = true;
+            sfd.Filter = "Excel files (*.xlsx)|*.xlsx";
+            sfd.FilterIndex = 0;
+            sfd.Title = "Edzésterv mentése excel táblázatba...";
+            string path = "";
+            
+            if(sfd.ShowDialog() == true)
+            {
+                path = sfd.FileName;
+
+                excelApp.Workbooks[1].SaveCopyAs(path);
+                excelApp.Workbooks[1].Saved = true;
+                excelApp.Workbooks[1].Close(true);
+                excelApp.Quit();
+            }
+
+            return Path.GetFileName(path);
+        }
+
+        // ezzel csak tesztelem
+        public TRAINING_PLAN GenerateTrainingPlan(ATHLETE a)
+        {
+            string filename = CreateExcelFromTrainingArray(this.Edzesek);
+            return new TRAINING_PLAN() { FILENAME = filename, RELEASE_DATE = DateTime.Now, ATHLETE = a, ATHLETE_ID = a.ID };
         }
 
         /// <summary>
