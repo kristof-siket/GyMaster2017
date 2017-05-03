@@ -41,7 +41,7 @@ namespace GyMaster
             RegistrationWindow rw = new RegistrationWindow();
             if(rw.ShowDialog()==true)
             {
-                if (VM.BL.RegistrationCheck(rw.UjSportolo))
+                if (VM.BL.RegistrationCheck(rw.UjSportolo,VM.BL.GetAthleteRepository()))
                 {
                     if (rw.edzoE)
                     {
@@ -80,7 +80,7 @@ namespace GyMaster
         /// <param name="e"></param>
         private void Belepes_Click(object sender, RoutedEventArgs e)
         {
-            if (VM.BL.LoginEllenorzes(txtFelhnev.Text, pwbJelszo.Password))
+            if (VM.BL.LoginEllenorzes(VM.BL.GetAthleteRepository(),txtFelhnev.Text, pwbJelszo.Password))
             {
                 MessageBox.Show("Sikeres belépés!");
                 var res = from x in VM.BL.GetAthleteRepository().GetAll()

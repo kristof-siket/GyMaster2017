@@ -1,4 +1,5 @@
 ﻿using Data;
+using Data.Interfaces;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -108,9 +109,9 @@ namespace BusinessLogic
         /// <param name="actUser">Ez lesz majd az inputon beadott név.</param>
         /// <param name="actPasswd">Input jelszó.</param>
         /// <returns>Van, vagy nincs ilyen név-jelszó pár.</returns>
-        public bool LoginEllenorzes(string actUser, string actPasswd)
+        public bool LoginEllenorzes(IRepository<ATHLETE> atr, string actUser, string actPasswd)
         {
-            foreach (ATHLETE a in athleteRepo.GetAll())
+            foreach (ATHLETE a in atr.GetAll())
                 if (a.NAME == actUser && a.PASSWORD == actPasswd)
                     return true;
             return false;
@@ -308,9 +309,9 @@ namespace BusinessLogic
         /// </summary>
         /// <param name="at">regisztrálni kívánt felhasználó</param>
         /// <returns></returns>
-        public bool RegistrationCheck(ATHLETE at)
+        public bool RegistrationCheck(ATHLETE at,IRepository<ATHLETE> atr)
         {
-            var res = from x in GetAthleteRepository().GetAll()
+            var res = from x in atr.GetAll()
                       where x.NAME == at.NAME && x.BORN_DATE == at.BORN_DATE
                       select x;
             if (res.Count() != 0)
