@@ -271,6 +271,8 @@ namespace BusinessLogic
                 return true;
         }
 
+
+
         /// <summary>
         /// Gyűjteményt alakít ObservableCollection-ná (GUI megjelenítéshez).
         /// </summary>
