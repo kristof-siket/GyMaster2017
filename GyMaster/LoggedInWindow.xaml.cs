@@ -88,7 +88,7 @@ namespace GyMaster
             else
             {
                 EXERCISE ex = VM.BL.GetExerciseRepository().GetExerciseByName(cmb_gyakorlat.SelectedItem.ToString());
-                VM.BL.GetResultRepository().Insert(new RESULT { ATHLETE = VM.loggedInAthlete, RES_KG = int.Parse(txt_teljesitmeny.Text), EXERCISE = ex, EX_ID = ex.ID, ATHLETE_ID = VM.loggedInAthlete.ID });
+                VM.BL.GetResultRepository().Insert(new RESULT {  ATHLETE = VM.loggedInAthlete, RES_KG = int.Parse(txt_teljesitmeny.Text), EXERCISE = ex, EX_ID = ex.ID, ATHLETE_ID = VM.loggedInAthlete.ID });
             }
         }
     }

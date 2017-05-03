@@ -105,13 +105,13 @@ namespace GyMaster
                     selectedRes.Remove(0);
                 }
                 //------CSAK TESZ MIATT------//
-                points.Add(new Point(60, 60));
-                points.Add(new Point(90, 70));
-                points.Add(new Point(120, 100));
-                points.Add(new Point(150, 120));
-                points.Add(new Point(180, 80));
-                points.Add(new Point(210, 70));
-                points.Add(new Point(240, 40));
+                //points.Add(new Point(60, 60));
+                //points.Add(new Point(90, 70));
+                //points.Add(new Point(120, 100));
+                //points.Add(new Point(150, 120));
+                //points.Add(new Point(180, 80));
+                //points.Add(new Point(210, 70));
+                //points.Add(new Point(240, 40));
                 //------------------------------//
 
                 Polyline polylyine = new Polyline();
@@ -127,13 +127,13 @@ namespace GyMaster
                     loggedRes.Remove(0);
                 }
                 //------CSAK TESZ MIATT------//
-                points2.Add(new Point(60, 50));
-                points2.Add(new Point(90, 60));
-                points2.Add(new Point(120, 90));
-                points2.Add(new Point(150, 100));
-                points2.Add(new Point(180, 50));
-                points2.Add(new Point(210, 80));
-                points2.Add(new Point(240, 120));
+                //points2.Add(new Point(60, 50));
+                //points2.Add(new Point(90, 60));
+                //points2.Add(new Point(120, 90));
+                //points2.Add(new Point(150, 100));
+                //points2.Add(new Point(180, 50));
+                //points2.Add(new Point(210, 80));
+                //points2.Add(new Point(240, 120));
                 //------------------------------//
                 Polyline polylyine2 = new Polyline();
                 polylyine2.StrokeThickness = 1;
