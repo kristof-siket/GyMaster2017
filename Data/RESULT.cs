@@ -17,6 +17,7 @@ namespace Data
         public decimal ATHLETE_ID { get; set; }
         public decimal EX_ID { get; set; }
         public Nullable<decimal> RES_KG { get; set; }
+        public int RES_ID { get; set; }
     
         public virtual ATHLETE ATHLETE { get; set; }
         public virtual EXERCISE EXERCISE { get; set; }

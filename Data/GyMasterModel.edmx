@@ -43,12 +43,12 @@
         </EntityType>
         <EntityType Name="RESULT">
           <Key>
-            <PropertyRef Name="ATHLETE_ID" />
-            <PropertyRef Name="EX_ID" />
+            <PropertyRef Name="RES_ID" />
           </Key>
           <Property Name="ATHLETE_ID" Type="numeric" Precision="4" Scale="0" Nullable="false" />
           <Property Name="EX_ID" Type="numeric" Precision="3" Scale="0" Nullable="false" />
           <Property Name="RES_KG" Type="numeric" Precision="3" Scale="0" />
+          <Property Name="RES_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="TRAINING_PLAN">
           <Key>
@@ -229,14 +229,14 @@
         </EntityType>
         <EntityType Name="RESULT">
           <Key>
-            <PropertyRef Name="ATHLETE_ID" />
-            <PropertyRef Name="EX_ID" />
+            <PropertyRef Name="RES_ID" />
           </Key>
           <Property Name="ATHLETE_ID" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
           <Property Name="EX_ID" Type="Decimal" Precision="3" Scale="0" Nullable="false" />
           <Property Name="RES_KG" Type="Decimal" Precision="3" Scale="0" />
           <NavigationProperty Name="ATHLETE" Relationship="Self.ATHLETE_FK" FromRole="RESULT" ToRole="ATHLETE" />
           <NavigationProperty Name="EXERCISE" Relationship="Self.EXERCISE_FK" FromRole="RESULT" ToRole="EXERCISE" />
+          <Property Name="RES_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="TRAINING_PLAN">
           <Key>
@@ -423,6 +423,7 @@
           <EntitySetMapping Name="RESULT">
             <EntityTypeMapping TypeName="GyMasterDatabaseModel.RESULT">
               <MappingFragment StoreEntitySet="RESULT">
+                <ScalarProperty Name="RES_ID" ColumnName="RES_ID" />
                 <ScalarProperty Name="ATHLETE_ID" ColumnName="ATHLETE_ID" />
                 <ScalarProperty Name="EX_ID" ColumnName="EX_ID" />
                 <ScalarProperty Name="RES_KG" ColumnName="RES_KG" />
