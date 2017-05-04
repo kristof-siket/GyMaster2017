@@ -86,6 +86,18 @@ namespace GyMaster
         /// <param name="e">esemény paraméterek</param>
         private void Kirajzol_Click(object sender, RoutedEventArgs e)
         {
+
+            List<UIElement> itemstoremove = new List<UIElement>();
+            foreach (UIElement ui in canGraph.Children)
+            {
+                if (ui is Polyline)
+                    itemstoremove.Add(ui);
+            }
+            foreach(UIElement ui in itemstoremove)
+            {
+                canGraph.Children.Remove(ui);
+            }
+
             if (cmb_selected.SelectedItem != null && cmb_loggedin.SelectedItem != null)
             {
                 List<int> selectedRes = new List<int>();
@@ -121,14 +133,14 @@ namespace GyMaster
                     points.Add(new Point(i * 30, selectedRes.First()));
                     selectedRes.Remove(0);
                 }
-                //------CSAK TESZ MIATT------//
-                //points.Add(new Point(60, 60));
-                //points.Add(new Point(90, 70));
-                //points.Add(new Point(120, 100));
-                //points.Add(new Point(150, 120));
-                //points.Add(new Point(180, 80));
-                //points.Add(new Point(210, 70));
-                //points.Add(new Point(240, 40));
+               // ------CSAK TESZ MIATT------//
+                points.Add(new Point(60, 60));
+                points.Add(new Point(90, 70));
+                points.Add(new Point(120, 100));
+                points.Add(new Point(150, 120));
+                points.Add(new Point(180, 80));
+                points.Add(new Point(210, 70));
+                points.Add(new Point(240, 40));
                 //------------------------------//
 
                 Polyline polylyine = new Polyline();
@@ -144,13 +156,13 @@ namespace GyMaster
                     loggedRes.Remove(0);
                 }
                 //------CSAK TESZ MIATT------//
-                //points2.Add(new Point(60, 50));
-                //points2.Add(new Point(90, 60));
-                //points2.Add(new Point(120, 90));
-                //points2.Add(new Point(150, 100));
-                //points2.Add(new Point(180, 50));
-                //points2.Add(new Point(210, 80));
-                //points2.Add(new Point(240, 120));
+                points2.Add(new Point(60, 50));
+                points2.Add(new Point(90, 60));
+                points2.Add(new Point(120, 90));
+                points2.Add(new Point(150, 100));
+                points2.Add(new Point(180, 50));
+                points2.Add(new Point(210, 80));
+                points2.Add(new Point(240, 120));
                 //------------------------------//
                 Polyline polylyine2 = new Polyline();
                 polylyine2.StrokeThickness = 1;

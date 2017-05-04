@@ -148,6 +148,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="resources\Main.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="resources\Gymaster.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

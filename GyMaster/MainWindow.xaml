@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GyMaster"
         mc:Ignorable="d"
-        Background="Aquamarine"
+        Background="LightGray"
         Title="Bejelentkezés" Height="360" Width="427" WindowStartupLocation="CenterScreen">
     <!--<Window.Background>
         <ImageBrush  ImageSource="..\Resources\OlyWeights.png"/>
@@ -19,6 +19,5 @@
         <Button x:Name="button1"  Content="Regisztráció" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="31,251,0,0" Click="Regisztracio_Click"/>
         <Label x:Name="label2" Content="Üdvözöljük!" HorizontalAlignment="Left" Margin="124,19,0,0" VerticalAlignment="Top" FontSize="30"/>
         <PasswordBox Password="Jelszó" x:Name="pwbJelszo" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="120" Margin="10,182,0,0" />
-
     </Grid>
 </Window>
