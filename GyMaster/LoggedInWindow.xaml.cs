@@ -48,7 +48,7 @@ namespace GyMaster
         }
 
 
-        //TODO már jó de valamiér csak egy legörgetés után látszódik
+        //TODO: már jó de valamiért csak egy legörgetés után látszódik
         /// <summary>
         /// Megbüntet gomb "click" eseménykezelője
         /// </summary>
@@ -74,13 +74,24 @@ namespace GyMaster
         {
             try
             {
-                TrainingPlanDescribeWindow tpd = new TrainingPlanDescribeWindow(VM.SelectedAthlete);
-                tpd.ShowDialog();
+                if (VM.loggedInAthlete is TRAINER)
+                {
+                    TrainingPlanDescribeWindow tpd = new TrainingPlanDescribeWindow(VM.SelectedAthlete);
+                    tpd.ShowDialog();
+                }
+                else
+                    throw new InvalidOperationException();
             }
             catch (AthleteIsPunishedException)
             {
                 MessageBox.Show("Ez a felhasználó nem kaphat edzéstervet, mert büntetett!");
             }
+
+            catch (InvalidOperationException)
+            {
+                MessageBox.Show("Nem készíthetsz edzéstervet, mert nem vagy edző!");
+            }
+
             catch (Exception)
             {
                 MessageBox.Show("A rendszer nem tud edzéstervet generálni ennek a sportolónak!");
@@ -120,7 +131,8 @@ namespace GyMaster
             }
             else
             {
-                EXERCISE ex = VM.BL.GetExerciseRepository().GetExerciseByName(cmb_gyakorlat.SelectedItem.ToString());
+                string selectedExercise = cmb_gyakorlat.SelectedValue.ToString();
+                EXERCISE ex = VM.BL.GetExerciseRepository().GetExerciseByName(selectedExercise);
                 VM.BL.GetResultRepository().Insert(new RESULT {  ATHLETE = VM.loggedInAthlete, RES_KG = int.Parse(txt_teljesitmeny.Text), EXERCISE = ex, EX_ID = ex.ID, ATHLETE_ID = VM.loggedInAthlete.ID });
             }
         }
