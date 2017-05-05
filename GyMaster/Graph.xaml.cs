@@ -26,6 +26,7 @@ namespace GyMaster
         ViewModel VM;
         const double margin = 30;
         const double step = 30;
+        const int ELLIPSE_SIZE = 10;
 
         /// <summary>
         /// Graph ablak konstruktora
@@ -99,7 +100,7 @@ namespace GyMaster
                 canGraph.Children.Remove(ui);
             }
 
-            if (cmb_selected.SelectedItem != null && cmb_loggedin.SelectedItem != null)
+            if (cmb_Gyakorlat.SelectedItem != null)
             {
                 List<int> selectedRes = new List<int>();
                 List<int> loggedRes = new List<int>();
@@ -114,7 +115,7 @@ namespace GyMaster
                 ATHLETE logged = at2.First();
                 foreach (RESULT res in selected.RESULT)
                 {
-                    if (res.EXERCISE.NAME == cmb_selected.SelectedItem.ToString())
+                    if (res.EXERCISE.NAME == cmb_Gyakorlat.SelectedItem.ToString())
                     {
                         selectedRes.Add((int)res.RES_KG);
                     }
@@ -122,17 +123,25 @@ namespace GyMaster
 
                 foreach (RESULT res in logged.RESULT)
                 {
-                    if (res.EXERCISE.NAME == cmb_loggedin.SelectedItem.ToString())
+                    if (res.EXERCISE.NAME == cmb_Gyakorlat.SelectedItem.ToString())
                     {
                         loggedRes.Add((int)res.RES_KG);
                     }
                 }
 
                 PointCollection points = new PointCollection();
-                for (int i = 0; i < selectedRes.Count + 1; i++)
+                for (int i = 0; i < selectedRes.Count; i++)
                 {
-                    points.Add(new Point(i * 30 + margin, canGraph.Height - margin - selectedRes.ElementAt(i))); //Fentről nézve van az y=0 ezért megkellett fordítani
-                    selectedRes.RemoveAt(0);
+                    Point p = new Point(i * 30 + margin, canGraph.Height - margin - selectedRes.ElementAt(i));
+                    points.Add(p); //Fentről nézve van az y=0 ezért megkellett fordítani
+                    selectedRes.ElementAt(i);
+                    Ellipse ge = new Ellipse();
+                    ge.SetValue(Canvas.LeftProperty, p.X-ELLIPSE_SIZE/2);
+                    ge.SetValue(Canvas.TopProperty, p.Y-ELLIPSE_SIZE/2);
+                    ge.Width = ELLIPSE_SIZE;
+                    ge.Height = ELLIPSE_SIZE;
+                    ge.SetValue(Ellipse.FillProperty, Brushes.Red);
+                    canGraph.Children.Add(ge);
                 }
                
                 Polyline polylyine = new Polyline();
@@ -142,9 +151,19 @@ namespace GyMaster
                 canGraph.Children.Add(polylyine);
 
                 PointCollection points2 = new PointCollection();
-                for (int i = 0; i < loggedRes.Count; i++)
+                                             
+               for (int i = 0; i < loggedRes.Count; i++)
                 {
-                    points2.Add(new Point(i * 30+margin, canGraph.Height-margin-loggedRes.ElementAt(i)));                   
+                    Point p = new Point(i * 30 + margin, canGraph.Height - margin - loggedRes.ElementAt(i));
+                    points2.Add(p);
+                    loggedRes.ElementAt(i);
+                    Ellipse ge = new Ellipse();
+                    ge.SetValue(Canvas.LeftProperty, p.X-ELLIPSE_SIZE/2);
+                    ge.SetValue(Canvas.TopProperty, p.Y-ELLIPSE_SIZE/2);
+                    ge.Width = ELLIPSE_SIZE;
+                    ge.Height = ELLIPSE_SIZE;                  
+                    ge.SetValue(Ellipse.FillProperty, Brushes.Blue);
+                    canGraph.Children.Add(ge);
                 }
                 
                 Polyline polylyine2 = new Polyline();

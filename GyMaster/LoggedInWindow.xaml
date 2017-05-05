@@ -10,11 +10,11 @@
         <local:IsPunishedToText x:Key="IPTT"/>
         <local:FavExScoreConverter x:Key="FECS"/>
     </Window.Resources>
-    <Grid>
+    <Grid >
         <Grid.Background>
             <ImageBrush ImageSource="..\Resources\Main.bmp" Opacity="10" />
         </Grid.Background>
-        <ListBox Background="DimGray" Opacity="10" HorizontalAlignment="Left" ItemsSource="{Binding Athletes}" SelectedItem="{Binding SelectedAthlete}" Height="334" Margin="10,84,0,0" VerticalAlignment="Top" Width="740">
+        <ListBox Background="DimGray" Opacity="10" HorizontalAlignment="Left" ItemsSource="{Binding Athletes}" SelectedItem="{Binding SelectedAthlete}"  Height="334" Margin="10,84,0,0" VerticalAlignment="Top" Width="740">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
