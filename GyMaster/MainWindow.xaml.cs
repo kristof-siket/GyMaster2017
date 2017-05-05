@@ -1,23 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Data;
-using BusinessLogic;
-using System.Diagnostics;
-
-namespace GyMaster
+﻿namespace GyMaster
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Data;
+    using System.Windows.Documents;
+    using System.Windows.Input;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
+    using System.Windows.Navigation;
+    using System.Windows.Shapes;
+    using BusinessLogic;
+    using Data;
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -26,31 +26,32 @@ namespace GyMaster
         /// <summary>
         /// Viewmodel példány
         /// </summary>
-        ViewModel VM;
+        private ViewModel vm;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="MainWindow"/> class.
         /// MainWindow konstruktora
         /// </summary>
         public MainWindow()
         {
-            VM = ViewModel.Get();
-            this.DataContext = VM;
-            InitializeComponent();
+            this.vm = ViewModel.Get();
+            this.DataContext = this.vm;
+            this.InitializeComponent();
         }
-       
+
         /// <summary>
         /// Regisztrálás
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">küldő</param>
+        /// <param name="e">eventargs</param>
         private void Regisztracio_Click(object sender, RoutedEventArgs e)
         {
             RegistrationWindow rw = new RegistrationWindow();
-            if(rw.ShowDialog()==true)
+            if (rw.ShowDialog() == true)
             {
-                if (VM.BL.RegistrationCheck(rw.UjSportolo,VM.BL.GetAthleteRepository()))
+                if (this.vm.BL.RegistrationCheck(rw.UjSportolo, this.vm.BL.GetAthleteRepository()))
                 {
-                    if (rw.edzoE)
+                    if (rw.EdzoE)
                     {
                         TRAINER newTrainer = new TRAINER
                         {
@@ -62,16 +63,17 @@ namespace GyMaster
                             HEIGHT = rw.UjSportolo.HEIGHT
                         };
                         newTrainer.IS_PUNISHED = false;
-                        newTrainer.MEMBER_FROM = DateTime.Today.Date;                       
-                        VM.BL.addNewMember(newTrainer, VM.BL.GetAthleteRepository());
+                        newTrainer.MEMBER_FROM = DateTime.Today.Date;
+                        this.vm.BL.AddNewMember(newTrainer, this.vm.BL.GetAthleteRepository());
                     }
                     else
                     {
                         rw.UjSportolo.IS_PUNISHED = false;
                         rw.UjSportolo.MEMBER_FROM = DateTime.Today.Date;
-                        VM.BL.addNewMember(rw.UjSportolo, VM.BL.GetAthleteRepository());
+                        this.vm.BL.AddNewMember(rw.UjSportolo, this.vm.BL.GetAthleteRepository());
                     }
-                    VM.Athletes = VM.BL.ToObservableCollection(VM.BL.GetAthleteRepository().GetAll());
+
+                    this.vm.Athletes = this.vm.BL.ToObservableCollection(this.vm.BL.GetAthleteRepository().GetAll());
                 }
                 else
                 {
@@ -83,23 +85,24 @@ namespace GyMaster
         /// <summary>
         /// Belépés
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Küldő</param>
+        /// <param name="e">eventargs</param>
         private void Belepes_Click(object sender, RoutedEventArgs e)
         {
-            if (VM.BL.LoginEllenorzes(VM.BL.GetAthleteRepository(),txtFelhnev.Text, pwbJelszo.Password))
+            if (this.vm.BL.LoginEllenorzes(this.vm.BL.GetAthleteRepository(), this.txtFelhnev.Text, this.pwbJelszo.Password))
             {
                 MessageBox.Show("Sikeres belépés!");
-                var res = from x in VM.BL.GetAthleteRepository().GetAll()
-                                     where x.NAME == txtFelhnev.Text
+                var res = from x in this.vm.BL.GetAthleteRepository().GetAll()
+                                     where x.NAME == this.txtFelhnev.Text
                                      select x;
-                VM.loggedInAthlete = res.First();
-                LoggedInWindow lg = new LoggedInWindow(VM.loggedInAthlete);
+                this.vm.LoggedInAthlete = res.First();
+                LoggedInWindow lg = new LoggedInWindow();
                 lg.ShowDialog();
             }
-
             else
-                MessageBox.Show("Nincs ilyen tagunk....");        
+            {
+                MessageBox.Show("Nincs ilyen tagunk....");
+            }
         }
     }
 }

@@ -1,41 +1,43 @@
-﻿using Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-
-namespace GyMaster
+﻿namespace GyMaster
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Data;
+    using System.Windows.Documents;
+    using System.Windows.Input;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
+    using System.Windows.Shapes;
+    using Data;
+
     /// <summary>
     /// Interaction logic for Graph.xaml
     /// </summary>
     public partial class Graph : Window
     {
+        private const double MARGIN = 30;
+        private const double STEP = 30;
+        private const int ELLIPSESIZE = 10;
+
         /// <summary>
         /// Viewmodel példány
         /// </summary>
-        ViewModel VM;
-        const double margin = 30;
-        const double step = 30;
-        const int ELLIPSE_SIZE = 10;
+        private ViewModel vm;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Graph"/> class.
         /// Graph ablak konstruktora
         /// </summary>
         public Graph()
         {
-            VM = ViewModel.Get();
-            this.DataContext = VM;
-            InitializeComponent();           
+            this.vm = ViewModel.Get();
+            this.DataContext = this.vm;
+            this.InitializeComponent();
         }
 
         /// <summary>
@@ -45,32 +47,33 @@ namespace GyMaster
         /// <param name="e">esemény paraméterek</param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            
-            double xmin = margin;
-            double xmax = canGraph.Width - margin;
-            double ymin = margin;
-            double ymax = canGraph.Height - margin;
-            
+            double xmin = MARGIN;
+
+            // double xmax = this.canGraph.Width - MARGIN;
+            double ymin = MARGIN;
+            double ymax = this.canGraph.Height - MARGIN;
+
             GeometryGroup xaxis_geom = new GeometryGroup();
-            xaxis_geom.Children.Add(new LineGeometry(new Point(0, ymax), new Point(canGraph.Width, ymax)));
-            for (double x= xmin+step;  x<= canGraph.Width; x+=step)
+            xaxis_geom.Children.Add(new LineGeometry(new Point(0, ymax), new Point(this.canGraph.Width, ymax)));
+            for (double x = xmin + STEP;  x <= this.canGraph.Width; x += STEP)
             {
-                xaxis_geom.Children.Add(new LineGeometry(new Point(x, ymax - margin / 2), new Point(x, ymax + margin / 2)));
+                xaxis_geom.Children.Add(new LineGeometry(new Point(x, ymax - (MARGIN / 2)), new Point(x, ymax + (MARGIN / 2))));
             }
+
             Path xaxis_path = new Path();
             xaxis_path.StrokeThickness = 1;
             xaxis_path.Stroke = Brushes.Black;
             xaxis_path.Data = xaxis_geom;
-            canGraph.Children.Add(xaxis_path);
+            this.canGraph.Children.Add(xaxis_path);
 
             GeometryGroup yaxis_geom = new GeometryGroup();
             yaxis_geom.Children.Add(new LineGeometry(
-                new Point(xmin, 0), new Point(xmin, canGraph.Height)));
-            for (double y = step; y <= canGraph.Height - step; y += step)
+                new Point(xmin, 0), new Point(xmin, this.canGraph.Height)));
+            for (double y = STEP; y <= this.canGraph.Height - STEP; y += STEP)
             {
                 yaxis_geom.Children.Add(new LineGeometry(
-                    new Point(ymin - margin / 2, y),
-                    new Point(ymin + margin / 2, y)));
+                    new Point(ymin - (MARGIN / 2), y),
+                    new Point(ymin + (MARGIN / 2), y)));
             }
 
             Path yaxis_path = new Path();
@@ -78,7 +81,7 @@ namespace GyMaster
             yaxis_path.Stroke = Brushes.Black;
             yaxis_path.Data = yaxis_geom;
 
-            canGraph.Children.Add(yaxis_path);
+            this.canGraph.Children.Add(yaxis_path);
         }
 
         /// <summary>
@@ -88,34 +91,36 @@ namespace GyMaster
         /// <param name="e">esemény paraméterek</param>
         private void Kirajzol_Click(object sender, RoutedEventArgs e)
         {
-
             List<UIElement> itemstoremove = new List<UIElement>();
-            foreach (UIElement ui in canGraph.Children)
+            foreach (UIElement ui in this.canGraph.Children)
             {
                 if (ui is Polyline)
+                {
                     itemstoremove.Add(ui);
-            }
-            foreach(UIElement ui in itemstoremove)
-            {
-                canGraph.Children.Remove(ui);
+                }
             }
 
-            if (cmb_Gyakorlat.SelectedItem != null)
+            foreach (UIElement ui in itemstoremove)
+            {
+                this.canGraph.Children.Remove(ui);
+            }
+
+            if (this.cmb_Gyakorlat.SelectedItem != null)
             {
                 List<int> selectedRes = new List<int>();
                 List<int> loggedRes = new List<int>();
-                var at1 = from x in VM.BL.GetAthleteRepository().GetAll()
-                          where x.NAME == VM.SelectedAthlete.NAME
+                var at1 = from x in this.vm.BL.GetAthleteRepository().GetAll()
+                          where x.NAME == this.vm.SelectedAthlete.NAME
                           select x;
-                var at2 = from x in VM.BL.GetAthleteRepository().GetAll()
-                          where x.NAME == VM.loggedInAthlete.NAME
+                var at2 = from x in this.vm.BL.GetAthleteRepository().GetAll()
+                          where x.NAME == this.vm.LoggedInAthlete.NAME
                           select x;
 
                 ATHLETE selected = at1.First();
                 ATHLETE logged = at2.First();
                 foreach (RESULT res in selected.RESULT)
                 {
-                    if (res.EXERCISE.NAME == cmb_Gyakorlat.SelectedItem.ToString())
+                    if (res.EXERCISE.NAME == this.cmb_Gyakorlat.SelectedItem.ToString())
                     {
                         selectedRes.Add((int)res.RES_KG);
                     }
@@ -123,7 +128,7 @@ namespace GyMaster
 
                 foreach (RESULT res in logged.RESULT)
                 {
-                    if (res.EXERCISE.NAME == cmb_Gyakorlat.SelectedItem.ToString())
+                    if (res.EXERCISE.NAME == this.cmb_Gyakorlat.SelectedItem.ToString())
                     {
                         loggedRes.Add((int)res.RES_KG);
                     }
@@ -132,45 +137,45 @@ namespace GyMaster
                 PointCollection points = new PointCollection();
                 for (int i = 0; i < selectedRes.Count; i++)
                 {
-                    Point p = new Point(i * 30 + margin, canGraph.Height - margin - selectedRes.ElementAt(i));
-                    points.Add(p); //Fentről nézve van az y=0 ezért megkellett fordítani
+                    Point p = new Point((i * 30) + MARGIN, this.canGraph.Height - MARGIN - selectedRes.ElementAt(i));
+                    points.Add(p); // Fentről nézve van az y=0 ezért megkellett fordítani
                     selectedRes.ElementAt(i);
                     Ellipse ge = new Ellipse();
-                    ge.SetValue(Canvas.LeftProperty, p.X-ELLIPSE_SIZE/2);
-                    ge.SetValue(Canvas.TopProperty, p.Y-ELLIPSE_SIZE/2);
-                    ge.Width = ELLIPSE_SIZE;
-                    ge.Height = ELLIPSE_SIZE;
+                    ge.SetValue(Canvas.LeftProperty, p.X - (ELLIPSESIZE / 2));
+                    ge.SetValue(Canvas.TopProperty, p.Y - (ELLIPSESIZE / 2));
+                    ge.Width = ELLIPSESIZE;
+                    ge.Height = ELLIPSESIZE;
                     ge.SetValue(Ellipse.FillProperty, Brushes.Red);
-                    canGraph.Children.Add(ge);
+                    this.canGraph.Children.Add(ge);
                 }
-               
+
                 Polyline polylyine = new Polyline();
                 polylyine.StrokeThickness = 1;
                 polylyine.Stroke = Brushes.Red;
                 polylyine.Points = points;
-                canGraph.Children.Add(polylyine);
+                this.canGraph.Children.Add(polylyine);
 
                 PointCollection points2 = new PointCollection();
-                                             
-               for (int i = 0; i < loggedRes.Count; i++)
+
+                for (int i = 0; i < loggedRes.Count; i++)
                 {
-                    Point p = new Point(i * 30 + margin, canGraph.Height - margin - loggedRes.ElementAt(i));
+                    Point p = new Point((i * 30) + MARGIN, this.canGraph.Height - MARGIN - loggedRes.ElementAt(i));
                     points2.Add(p);
                     loggedRes.ElementAt(i);
                     Ellipse ge = new Ellipse();
-                    ge.SetValue(Canvas.LeftProperty, p.X-ELLIPSE_SIZE/2);
-                    ge.SetValue(Canvas.TopProperty, p.Y-ELLIPSE_SIZE/2);
-                    ge.Width = ELLIPSE_SIZE;
-                    ge.Height = ELLIPSE_SIZE;                  
+                    ge.SetValue(Canvas.LeftProperty, p.X - (ELLIPSESIZE / 2));
+                    ge.SetValue(Canvas.TopProperty, p.Y - (ELLIPSESIZE / 2));
+                    ge.Width = ELLIPSESIZE;
+                    ge.Height = ELLIPSESIZE;
                     ge.SetValue(Ellipse.FillProperty, Brushes.Blue);
-                    canGraph.Children.Add(ge);
+                    this.canGraph.Children.Add(ge);
                 }
-                
+
                 Polyline polylyine2 = new Polyline();
                 polylyine2.StrokeThickness = 1;
                 polylyine2.Stroke = Brushes.Blue;
                 polylyine2.Points = points2;
-                canGraph.Children.Add(polylyine2);
+                this.canGraph.Children.Add(polylyine2);
             }
             else
             {

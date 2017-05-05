@@ -1,39 +1,16 @@
-﻿using BusinessLogic;
-using Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows;
-
-namespace GyMaster
+﻿namespace GyMaster
 {
-    /// <summary>
-    /// Az 'adatköthető' entitásokat reprezentáló absztrakt osztály.
-    /// </summary>
-    public abstract class Bindable : INotifyPropertyChanged
-    {
-        /// <summary>
-        /// A tulajdonságváltozást jelző esemény.
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// PropertyChanged esemény "elsütése".
-        /// </summary>
-        /// <param name="n">A hívó property.</param>
-        protected void OPC([CallerMemberName]string n = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(n));
-            }
-        }
-    }
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using System.Linq;
+    using System.Runtime.CompilerServices;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Windows;
+    using BusinessLogic;
+    using Data;
 
     /// <summary>
     /// Singleton tervezésű ViewModel az MVVM pattern implementálásához.
@@ -41,130 +18,158 @@ namespace GyMaster
     public class ViewModel : Bindable
     {
         /// <summary>
+        /// Egyetlen viewmodel példány
+        /// </summary>
+        private static ViewModel peldany;
+
+        /// <summary>
         /// Logic példány
         /// </summary>
-        Logic bl;
+        private Logic bl;
 
         // ----------------------------BINDING----------------------------------- //
-
         private ATHLETE selectedAthlete;
         private List<string> selectedathleteExercises;
         private List<string> loggedinathleteExercises;
         private List<string> exercises;
 
-        public ObservableCollection<Training> TrainingList { get; set; }
-
         /// <summary>
-        /// Exercise listát visszaadó property
+        /// Initializes a new instance of the <see cref="ViewModel"/> class.
+        /// Viewmodel konstruktor
         /// </summary>
-        public List<string> ExercisesList
+        private ViewModel()
         {
-            get
-            {
-                exercises = new List<string>();
-                foreach(EXERCISE ex in bl.GetExerciseRepository().GetAll())
-                {
-                    exercises.Add(ex.NAME);
-                }
-                return exercises;
-            }
+            this.bl = new Logic();
+            this.Athletes = this.bl.ToObservableCollection(this.bl.GetAthleteRepository().GetAll());
+            this.Gyms = this.bl.ToObservableCollection(this.bl.GetGymRepository().GetAll());
+            this.TrainingPlans = this.bl.ToObservableCollection(this.bl.GetTrainingPlanRepository().GetAll());
+            this.Exercises = this.bl.ToObservableCollection(this.bl.GetExerciseRepository().GetAll());
+            this.Results = this.bl.ToObservableCollection(this.bl.GetResultRepository().GetAll());
         }
 
         /// <summary>
-        /// Kiválasztott atléta gyakorlatait visszaadó lista
+        /// Gets kiválasztott atléta gyakorlatait visszaadó lista
         /// </summary>
         public List<string> SelectedAthleteExercises
         {
             get
             {
-                selectedathleteExercises = new List<string>();               
+                this.selectedathleteExercises = new List<string>();
                 {
-                    foreach (RESULT res in selectedAthlete.RESULT)
+                    foreach (RESULT res in this.selectedAthlete.RESULT)
                     {
-                        if (!selectedathleteExercises.Contains(res.EXERCISE.NAME))
-                            selectedathleteExercises.Add(res.EXERCISE.NAME);
+                        if (!this.selectedathleteExercises.Contains(res.EXERCISE.NAME))
+                        {
+                            this.selectedathleteExercises.Add(res.EXERCISE.NAME);
+                        }
                     }
-                    return selectedathleteExercises;
+
+                    return this.selectedathleteExercises;
                 }
-               
             }
         }
 
         /// <summary>
-        /// Bejelentkezett felhasználó gyakorlatait visszaadó lista
+        /// Gets bejelentkezett felhasználó gyakorlatait tartalmazó lista
         /// </summary>
         public List<string> LoggedInAthleteExercises
         {
             get
             {
-                loggedinathleteExercises = new List<string>();
+                this.loggedinathleteExercises = new List<string>();
                 {
-                    foreach (RESULT res in loggedInAthlete.RESULT)
+                    foreach (RESULT res in this.LoggedInAthlete.RESULT)
                     {
-                        if (!loggedinathleteExercises.Contains(res.EXERCISE.NAME))
-                            loggedinathleteExercises.Add(res.EXERCISE.NAME);
+                        if (!this.loggedinathleteExercises.Contains(res.EXERCISE.NAME))
+                        {
+                            this.loggedinathleteExercises.Add(res.EXERCISE.NAME);
+                        }
                     }
-                    return loggedinathleteExercises;
-                }
 
+                    return this.loggedinathleteExercises;
+                }
             }
         }
 
         /// <summary>
-        /// Kiválasztott atléta property
+        /// Gets or sets kiválasztott atléta property
         /// </summary>
         public ATHLETE SelectedAthlete
         {
-            get { return selectedAthlete; }
-            set { selectedAthlete = value; OPC(); }
+            get
+            {
+                return this.selectedAthlete;
+            }
+
+            set
+            {
+                this.selectedAthlete = value;
+                this.OPC();
+            }
         }
-       
-        /// <summary>
-        /// Bejelentkezett sportolót visszaadó property
-        /// </summary>
-        public ATHLETE loggedInAthlete { get; set; }
 
         /// <summary>
-        /// Sportolókat tartalmazó ObservableCollectiont visszaadó property
+        /// Gets exercise lista
+        /// </summary>
+        public List<string> ExercisesList
+        {
+            get
+            {
+                this.exercises = new List<string>();
+                foreach (EXERCISE ex in this.bl.GetExerciseRepository().GetAll())
+                {
+                    this.exercises.Add(ex.NAME);
+                }
+
+                return this.exercises;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets aktuálisan elkészített edzéslista.
+        /// </summary>
+        public ObservableCollection<Training> TrainingList { get; set; }
+
+        /// <summary>
+        /// Gets or sets bejelentkezett sportoló
+        /// </summary>
+        public ATHLETE LoggedInAthlete { get; set; }
+
+        /// <summary>
+        /// Gets or sets sportolókat tartalmazó ObservableCollection
         /// </summary>
         public ObservableCollection<ATHLETE> Athletes { get; set; }
 
         /// <summary>
-        /// Konditermeket tartalmazó ObservableCollectiont visszaadó property
+        /// Gets or sets konditermeket tartalmazó ObservableCollection
         /// </summary>
         public ObservableCollection<GYM> Gyms { get; set; }
 
         /// <summary>
-        /// Edzésterveket tartalmazó ObservableCollectiont visszaadó property
+        /// Gets or sets edzésterveket tartalmazó ObservableCollection
         /// </summary>
         public ObservableCollection<TRAINING_PLAN> TrainingPlans { get; set; }
 
         /// <summary>
-        /// Gyakorlatokat tartalmazó ObservableCollectiont visszaadó property
+        /// Gets or sets gyakorlatokat tartalmazó ObservableCollection
         /// </summary>
         public ObservableCollection<EXERCISE> Exercises { get; set; }
 
         /// <summary>
-        /// Eredményeket tartalmazó ObservableCollectiont visszaadó property
+        /// Gets or sets eredményeket tartalmazó ObservableCollection
         /// </summary>
         public ObservableCollection<RESULT> Results { get; set; }
 
         // ----------------------------END BINDING----------------------------------- //
 
-        
         /// <summary>
-        /// Logic konstruktora
+        /// Gets logic
         /// </summary>
         public Logic BL
         {
-            get { return bl; }
-            private set { bl = value; }
+            get { return this.bl; }
+            private set { this.bl = value; }
         }
-
-        /// <summary>
-        /// Egyetlen viewmodel példány
-        /// </summary>
-        private static ViewModel _peldany;
 
         /// <summary>
         /// Visszaadja az egyetlen ViewModel példányt, ha nem létezik, létrehozza.
@@ -172,22 +177,12 @@ namespace GyMaster
         /// <returns>A ViewModel.</returns>
         public static ViewModel Get()
         {
-            if (_peldany == null)
-                _peldany = new ViewModel();
-            return _peldany;
-        }
+            if (peldany == null)
+            {
+                peldany = new ViewModel();
+            }
 
-        /// <summary>
-        /// Viewmodel konstruktor
-        /// </summary>
-        private ViewModel()
-        {
-            bl = new Logic();
-            Athletes = bl.ToObservableCollection(bl.GetAthleteRepository().GetAll());
-            Gyms = bl.ToObservableCollection(bl.GetGymRepository().GetAll());
-            TrainingPlans = bl.ToObservableCollection(bl.GetTrainingPlanRepository().GetAll());
-            Exercises = bl.ToObservableCollection(bl.GetExerciseRepository().GetAll());
-            Results = bl.ToObservableCollection(bl.GetResultRepository().GetAll());
+            return peldany;
         }
     }
 }

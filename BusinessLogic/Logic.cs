@@ -1,19 +1,19 @@
-﻿using Data;
-using Data.Interfaces;
-using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Media;
-using Excel = Microsoft.Office.Interop.Excel;
-
-namespace BusinessLogic
+﻿namespace BusinessLogic
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.IO;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Windows.Controls;
+    using System.Windows.Media;
+    using Data;
+    using Data.Interfaces;
+    using Microsoft.Win32;
+    using Excel = Microsoft.Office.Interop.Excel;
+
     public class Logic
     {
         private GyMasterDBEntities gde;
@@ -21,7 +21,7 @@ namespace BusinessLogic
         /// <summary>
         /// Edzés tömb
         /// </summary>
-        Training[] edzesek;
+        private Training[] edzesek;
 
         /// <summary>
         /// Athlete repository
@@ -49,17 +49,19 @@ namespace BusinessLogic
         private ResultRepository resultRepo;
 
         /// <summary>
-        /// Edzések tömb propertyje
-        /// </summary>
-        public Training[] Edzesek { get => edzesek; set => edzesek = value; }
-
-        /// <summary>
+        /// Initializes a new instance of the <see cref="Logic"/> class.
         /// Business logic konstruktora
         /// </summary>
+        /// <returns>Logic példány.</returns>
         public Logic()
         {
-            gde = DatabaseEntityProvider.GetDatabaseEntities();
+            this.gde = DatabaseEntityProvider.GetDatabaseEntities();
         }
+
+        /// <summary>
+        /// Gets or sets edzések tömb propertyje
+        /// </summary>
+        public Training[] Edzesek { get => this.edzesek; set => this.edzesek = value; }
 
         //-----------------------------------INNENTŐL JÖNNEK A REPOKAT ELÉRŐ METÓDUSOK-------------------------------//
 
@@ -67,11 +69,14 @@ namespace BusinessLogic
         /// Visszaadja az AthleteRepository-t.
         /// </summary>
         /// <returns>Az egyetlen AthleteRepository.</returns>
-        public  AthleteRepository GetAthleteRepository()
+        public AthleteRepository GetAthleteRepository()
         {
-            if (athleteRepo == null)
-                athleteRepo = new AthleteRepository();
-            return athleteRepo;
+            if (this.athleteRepo == null)
+            {
+                this.athleteRepo = new AthleteRepository();
+            }
+
+            return this.athleteRepo;
         }
 
         /// <summary>
@@ -80,9 +85,12 @@ namespace BusinessLogic
         /// <returns>Az egyetlen GymRepository.</returns>
         public GymRepository GetGymRepository()
         {
-            if (gymRepo == null)
-                gymRepo = new GymRepository();
-            return gymRepo;
+            if (this.gymRepo == null)
+            {
+                this.gymRepo = new GymRepository();
+            }
+
+            return this.gymRepo;
         }
 
         /// <summary>
@@ -91,9 +99,12 @@ namespace BusinessLogic
         /// <returns>Az egyetlen TrainingPlanRepository.</returns>
         public TrainingPlanRepository GetTrainingPlanRepository()
         {
-            if (trainingPlanRepo == null)
-                trainingPlanRepo = new TrainingPlanRepository();
-            return trainingPlanRepo;
+            if (this.trainingPlanRepo == null)
+            {
+                this.trainingPlanRepo = new TrainingPlanRepository();
+            }
+
+            return this.trainingPlanRepo;
         }
 
         /// <summary>
@@ -102,9 +113,12 @@ namespace BusinessLogic
         /// <returns>Az egyetlen ExerciseRepository.</returns>
         public ExerciseRepository GetExerciseRepository()
         {
-            if (exerciseRepo == null)
-                exerciseRepo = new ExerciseRepository();
-            return exerciseRepo;
+            if (this.exerciseRepo == null)
+            {
+                this.exerciseRepo = new ExerciseRepository();
+            }
+
+            return this.exerciseRepo;
         }
 
         /// <summary>
@@ -113,9 +127,12 @@ namespace BusinessLogic
         /// <returns>Az egyetlen ResultRepository.</returns>
         public ResultRepository GetResultRepository()
         {
-            if (resultRepo == null)
-                resultRepo = new ResultRepository();
-            return resultRepo;
+            if (this.resultRepo == null)
+            {
+                this.resultRepo = new ResultRepository();
+            }
+
+            return this.resultRepo;
         }
 
         //---------------------------------------REPO-METÓDUSOK VÉGE-----------------------------------------------//
@@ -125,23 +142,29 @@ namespace BusinessLogic
         /// </summary>
         /// <param name="at">A hozzáadandó sportoló.</param>
         /// <param name="ar">Az ATHLETE objektumokhoz való hozzáférést kezelő repository.</param>
-        public void addNewMember(ATHLETE at,IRepository<ATHLETE> ar)
+        public void AddNewMember(ATHLETE at, IRepository<ATHLETE> ar)
         {
-            //ATHLETE at = new ATHLETE { NAME = name, PASSWORD = password };           
-           ar.Insert(at);                    
+            // ATHLETE at = new ATHLETE { NAME = name, PASSWORD = password };
+           ar.Insert(at);
         }
 
         /// <summary>
         /// Egyszerű, gagyi login validáció.
         /// </summary>
+        /// <param name="atr">Athlete repository.</param>
         /// <param name="actUser">Ez lesz majd az inputon beadott név.</param>
         /// <param name="actPasswd">Input jelszó.</param>
         /// <returns>Van, vagy nincs ilyen név-jelszó pár.</returns>
         public bool LoginEllenorzes(IRepository<ATHLETE> atr, string actUser, string actPasswd)
         {
             foreach (ATHLETE a in atr.GetAll())
+            {
                 if (a.NAME == actUser && a.PASSWORD == actPasswd)
+                {
                     return true;
+                }
+            }
+
             return false;
         }
 
@@ -159,12 +182,17 @@ namespace BusinessLogic
             {
                 // először megnézzük, mióta edz (mióta tag), ha 1 év vagy annál több, akkor heti 4 edzés, ha kevesebb, akkor csak 3
                 if ((DateTime.Now.Year - a.MEMBER_FROM.Value.Year) <= 3)
+                {
                     hetiEdzesSzam = 3;
+                }
                 else
+                {
                     hetiEdzesSzam = 4;
+                }
+
                 edzesTomb = new Training[hetiEdzesSzam];
-                edzesTomb[0] = new Training() { FoGyakorlat = a.FAVOURITE_EX };
-                switch (edzesTomb[0].FoGyakorlat.NAME) // úgy tervezzük, hogy végezhesse a hét első edzésén a kedvenc gyakorlatát
+                edzesTomb[0] = new Training() { FoGyakorlat = a.FAVOURITE_EX }; // úgy tervezzük, hogy végezhesse a hét első edzésén a kedvenc gyakorlatát
+                switch (edzesTomb[0].FoGyakorlat.NAME)
                 {
                     case "Fekvenyomás":
                         edzesTomb[0].Title = "Mell edzés";
@@ -180,39 +208,41 @@ namespace BusinessLogic
                         break;
                 }
 
-                if (hetiEdzesSzam == 3) // a helyzet egyértelmű, minden gyakorlat köré egy edzés épül a héten
+                // a helyzet egyértelmű, minden gyakorlat köré egy edzés épül a héten
+                if (hetiEdzesSzam == 3)
                 {
                     for (int i = 1; i < edzesTomb.Length; i++)
                     {
                         edzesTomb[i] = new Training();
                     }
 
-                    switch (a.FAVOURITE_EX.NAME) // elég redundáns, majd lehet refaktorálni
+                    switch (a.FAVOURITE_EX.NAME)
                     {
                         case "Fekvenyomás": // ha a hét mellnappal indult
-                            edzesTomb[1].FoGyakorlat = GetExerciseRepository().GetExerciseByName("Guggolás");
+                            edzesTomb[1].FoGyakorlat = this.GetExerciseRepository().GetExerciseByName("Guggolás");
                             edzesTomb[1].Title = "Láb edzés";
-                            edzesTomb[2].FoGyakorlat = GetExerciseRepository().GetExerciseByName("Felhúzás");
+                            edzesTomb[2].FoGyakorlat = this.GetExerciseRepository().GetExerciseByName("Felhúzás");
                             edzesTomb[2].Title = "Hát edzés";
                             break;
                         case "Guggolás": // ha a hét lábnappal indult
-                            edzesTomb[1].FoGyakorlat = GetExerciseRepository().GetExerciseByName("Fekvenyomás");
+                            edzesTomb[1].FoGyakorlat = this.GetExerciseRepository().GetExerciseByName("Fekvenyomás");
                             edzesTomb[1].Title = "Mell edzés";
-                            edzesTomb[2].FoGyakorlat = GetExerciseRepository().GetExerciseByName("Felhúzás");
+                            edzesTomb[2].FoGyakorlat = this.GetExerciseRepository().GetExerciseByName("Felhúzás");
                             edzesTomb[2].Title = "Hát edzés";
                             break;
                         case "Felhúzás": // ha a hét hátnappal indult
-                            edzesTomb[1].FoGyakorlat = GetExerciseRepository().GetExerciseByName("Fekvenyomás");
+                            edzesTomb[1].FoGyakorlat = this.GetExerciseRepository().GetExerciseByName("Fekvenyomás");
                             edzesTomb[1].Title = "Mell edzés";
-                            edzesTomb[2].FoGyakorlat = GetExerciseRepository().GetExerciseByName("Guggolás");
+                            edzesTomb[2].FoGyakorlat = this.GetExerciseRepository().GetExerciseByName("Guggolás");
                             edzesTomb[2].Title = "Láb edzés";
                             break;
                     }
                 }
 
-                else if (hetiEdzesSzam == 4) // valamelyik területre dupla edzés mehet, szóval ki kell választani a leggyengébb területet
+                // valamelyik területre dupla edzés mehet, szóval ki kell választani a leggyengébb területet
+                else if (hetiEdzesSzam == 4)
                 {
-                    var sportolo_eredmenyei = from x in GetResultRepository().GetAll().ToList()
+                    var sportolo_eredmenyei = from x in this.GetResultRepository().GetAll().ToList()
                                               where x.ATHLETE == a
                                               select x;
 
@@ -227,27 +257,28 @@ namespace BusinessLogic
                     }
 
                     EXERCISE leggyengebbGyakorlat = res_weakest.ToList().Single();
-                    switch (a.FAVOURITE_EX.NAME) // elég redundáns, majd lehet refaktorálni
+                    switch (a.FAVOURITE_EX.NAME)
                     {
                         case "Fekvenyomás": // ha a hét mellnappal indult
-                            edzesTomb[1].FoGyakorlat = GetExerciseRepository().GetExerciseByName("Guggolás");
+                            edzesTomb[1].FoGyakorlat = this.GetExerciseRepository().GetExerciseByName("Guggolás");
                             edzesTomb[1].Title = "Láb edzés";
-                            edzesTomb[2].FoGyakorlat = GetExerciseRepository().GetExerciseByName("Felhúzás");
+                            edzesTomb[2].FoGyakorlat = this.GetExerciseRepository().GetExerciseByName("Felhúzás");
                             edzesTomb[2].Title = "Hát edzés";
                             break;
                         case "Guggolás": // ha a hét lábnappal indult
-                            edzesTomb[1].FoGyakorlat = GetExerciseRepository().GetExerciseByName("Fekvenyomás");
+                            edzesTomb[1].FoGyakorlat = this.GetExerciseRepository().GetExerciseByName("Fekvenyomás");
                             edzesTomb[1].Title = "Mell edzés";
-                            edzesTomb[2].FoGyakorlat = GetExerciseRepository().GetExerciseByName("Felhúzás");
+                            edzesTomb[2].FoGyakorlat = this.GetExerciseRepository().GetExerciseByName("Felhúzás");
                             edzesTomb[2].Title = "Hát edzés";
                             break;
                         case "Felhúzás": // ha a hét hátnappal indult
-                            edzesTomb[1].FoGyakorlat = GetExerciseRepository().GetExerciseByName("Fekvenyomás");
+                            edzesTomb[1].FoGyakorlat = this.GetExerciseRepository().GetExerciseByName("Fekvenyomás");
                             edzesTomb[1].Title = "Mell edzés";
-                            edzesTomb[2].FoGyakorlat = GetExerciseRepository().GetExerciseByName("Guggolás");
+                            edzesTomb[2].FoGyakorlat = this.GetExerciseRepository().GetExerciseByName("Guggolás");
                             edzesTomb[2].Title = "Láb edzés";
                             break;
                     }
+
                     edzesTomb[3].FoGyakorlat = leggyengebbGyakorlat; // beállítjuk az utsó edzésre a leggyengébb gyakorlatot
                     switch (leggyengebbGyakorlat.NAME)
                     {
@@ -262,17 +293,64 @@ namespace BusinessLogic
                             break;
                     }
 
-                    if (edzesTomb[3].FoGyakorlat.NAME == edzesTomb[2].FoGyakorlat.NAME) // megoldjuk, hogy tuti ne legyen 2 egymást követő napon ugyanolyan edzés
+                    // megoldjuk, hogy tuti ne legyen 2 egymást követő napon ugyanolyan edzés
+                    if (edzesTomb[3].FoGyakorlat.NAME == edzesTomb[2].FoGyakorlat.NAME)
                     {
                         Training atm = edzesTomb[2];
                         edzesTomb[2] = edzesTomb[1];
                         edzesTomb[1] = atm;
                     }
                 }
+
                 return edzesTomb;
             }
             else
+            {
                 throw new AthleteIsPunishedException(); // ezt a hívás helyén kell majd elkapni
+            }
+        }
+
+        /// <summary>
+        /// Edzésterv objektumot készít az eddigi metódusok segítségével.
+        /// </summary>
+        /// <param name="a">A sportoló, akinek készül.</param>
+        /// <returns>Új edzésterv.</returns>
+        public TRAINING_PLAN GenerateTrainingPlan(ATHLETE a)
+        {
+            string filename = this.CreateExcelFromTrainingArray(this.Edzesek);
+            return new TRAINING_PLAN() { FILENAME = filename, RELEASE_DATE = DateTime.Now, ATHLETE = a, ATHLETE_ID = a.ID };
+        }
+
+        /// <summary>
+        /// Ellenőrzi hogy nincs e két ugyan olyan felhasználó
+        /// </summary>
+        /// <param name="at">regisztrálni kívánt felhasználó</param>
+        /// <param name="atr">Athlete repository.</param>
+        /// <returns>Van-e már ilyen adatokkal rendelkező user.</returns>
+        public bool RegistrationCheck(ATHLETE at, IRepository<ATHLETE> atr)
+        {
+            var res = from x in atr.GetAll()
+                      where x.NAME == at.NAME && x.BORN_DATE == at.BORN_DATE
+                      select x;
+            if (res.Count() != 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Gyűjteményt alakít ObservableCollection-ná (GUI megjelenítéshez).
+        /// </summary>
+        /// <typeparam name="T">A collection típusparamétere.</typeparam>
+        /// <param name="enumeration">A bemeneti gyűjtemény.</param>
+        /// <returns>A bemeneti gyűjtemény konvertálva ObservableCollection-né.</returns>
+        public ObservableCollection<T> ToObservableCollection<T>(IEnumerable<T> enumeration) // Kristóf: átírtam ezt is példányszintűre, mivel a ViewModelben úgyis le van példányosítva a BL
+        {
+            return new ObservableCollection<T>(enumeration);
         }
 
         private string CreateExcelFromTrainingArray(Training[] trainings)
@@ -294,6 +372,7 @@ namespace BusinessLogic
                 workSheet.Cells[row, "C"] = t.FoGyakorlat.NAME;
                 workSheet.Cells[row, "D"] = t.Leiras;
             }
+
             workSheet.Columns[1].AutoFit();
             workSheet.Columns[2].AutoFit();
             workSheet.Columns[3].AutoFit();
@@ -310,9 +389,10 @@ namespace BusinessLogic
             sfd.Filter = "Excel files (*.xlsx)|*.xlsx";
             sfd.FilterIndex = 0;
             sfd.Title = "Edzésterv mentése excel táblázatba...";
-            string path = "";
-            
-            if(sfd.ShowDialog() == true)
+            sfd.FileName = "edzesterv";
+            string path = string.Empty;
+
+            if (sfd.ShowDialog() == true)
             {
                 path = sfd.FileName;
 
@@ -324,50 +404,5 @@ namespace BusinessLogic
 
             return Path.GetFileName(path);
         }
-
-        // ezzel csak tesztelem
-        public TRAINING_PLAN GenerateTrainingPlan(ATHLETE a)
-        {
-            string filename = CreateExcelFromTrainingArray(this.Edzesek);
-            return new TRAINING_PLAN() { FILENAME = filename, RELEASE_DATE = DateTime.Now, ATHLETE = a, ATHLETE_ID = a.ID };
-        }
-
-        /// <summary>
-        /// Ellenőrzi hogy nincs e két ugyan olyan felhasználó
-        /// </summary>
-        /// <param name="at">regisztrálni kívánt felhasználó</param>
-        /// <returns></returns>
-        public bool RegistrationCheck(ATHLETE at,IRepository<ATHLETE> atr)
-        {
-            var res = from x in atr.GetAll()
-                      where x.NAME == at.NAME && x.BORN_DATE == at.BORN_DATE
-                      select x;
-            if (res.Count() != 0)
-                return false;
-            else
-                return true;
-        }
-
-
-
-        /// <summary>
-        /// Gyűjteményt alakít ObservableCollection-ná (GUI megjelenítéshez).
-        /// </summary>
-        /// <typeparam name="T">A collection típusparamétere.</typeparam>
-        /// <param name="enumeration">A bemeneti gyűjtemény.</param>
-        /// <returns>A bemeneti gyűjtemény konvertálva ObservableCollection-né.</returns>
-        public ObservableCollection<T> ToObservableCollection<T>(IEnumerable<T> enumeration) // Kristóf: átírtam ezt is példányszintűre, mivel a ViewModelben úgyis le van példányosítva a BL
-        {
-            return new ObservableCollection<T>(enumeration);
-        }
     }
-
-    /// <summary>
-    /// Sérült sportoló kivétel
-    /// </summary>
-    public class AthleteIsPunishedException : Exception
-    {
-
-    }
-
 }

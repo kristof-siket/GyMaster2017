@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Data
+﻿namespace Data
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+
     /// <summary>
     /// Az adatbázis-entitásokat szolgáltató statikus osztály.
     /// </summary>
@@ -20,7 +20,10 @@ namespace Data
         public static GyMasterDBEntities GetDatabaseEntities()
         {
             if (gde == null)
+            {
                 gde = new GyMasterDBEntities();
+            }
+
             return gde;
         }
     }
