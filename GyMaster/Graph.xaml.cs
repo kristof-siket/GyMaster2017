@@ -24,6 +24,8 @@ namespace GyMaster
         /// Viewmodel példány
         /// </summary>
         ViewModel VM;
+        const double margin = 30;
+        const double step = 30;
 
         /// <summary>
         /// Graph ablak konstruktora
@@ -42,13 +44,12 @@ namespace GyMaster
         /// <param name="e">esemény paraméterek</param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            const double margin = 30;
+            
             double xmin = margin;
             double xmax = canGraph.Width - margin;
             double ymin = margin;
             double ymax = canGraph.Height - margin;
-            const double step = 30;
-
+            
             GeometryGroup xaxis_geom = new GeometryGroup();
             xaxis_geom.Children.Add(new LineGeometry(new Point(0, ymax), new Point(canGraph.Width, ymax)));
             for (double x= xmin+step;  x<= canGraph.Width; x+=step)
@@ -128,21 +129,12 @@ namespace GyMaster
                 }
 
                 PointCollection points = new PointCollection();
-                for (int i = 1; i < selectedRes.Count + 1; i++)
+                for (int i = 0; i < selectedRes.Count + 1; i++)
                 {
-                    points.Add(new Point(i * 30, selectedRes.First()));
-                    selectedRes.Remove(0);
+                    points.Add(new Point(i * 30 + margin, canGraph.Height - margin - selectedRes.ElementAt(i))); //Fentről nézve van az y=0 ezért megkellett fordítani
+                    selectedRes.RemoveAt(0);
                 }
-               // ------CSAK TESZ MIATT------//
-                points.Add(new Point(60, 60));
-                points.Add(new Point(90, 70));
-                points.Add(new Point(120, 100));
-                points.Add(new Point(150, 120));
-                points.Add(new Point(180, 80));
-                points.Add(new Point(210, 70));
-                points.Add(new Point(240, 40));
-                //------------------------------//
-
+               
                 Polyline polylyine = new Polyline();
                 polylyine.StrokeThickness = 1;
                 polylyine.Stroke = Brushes.Red;
@@ -150,20 +142,11 @@ namespace GyMaster
                 canGraph.Children.Add(polylyine);
 
                 PointCollection points2 = new PointCollection();
-                for (int i = 1; i < loggedRes.Count + 1; i++)
+                for (int i = 0; i < loggedRes.Count; i++)
                 {
-                    points2.Add(new Point(i * 30, loggedRes.First()));
-                    loggedRes.Remove(0);
+                    points2.Add(new Point(i * 30+margin, canGraph.Height-margin-loggedRes.ElementAt(i)));                   
                 }
-                //------CSAK TESZ MIATT------//
-                points2.Add(new Point(60, 50));
-                points2.Add(new Point(90, 60));
-                points2.Add(new Point(120, 90));
-                points2.Add(new Point(150, 100));
-                points2.Add(new Point(180, 50));
-                points2.Add(new Point(210, 80));
-                points2.Add(new Point(240, 120));
-                //------------------------------//
+                
                 Polyline polylyine2 = new Polyline();
                 polylyine2.StrokeThickness = 1;
                 polylyine2.Stroke = Brushes.Blue;
