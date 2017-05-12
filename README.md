@@ -9,6 +9,7 @@ Ami még problémát okozhat, hogy az adatbázisszerver-instancia NEVE is eltér
 Ehhez szükséges parancsok:
 
 cd C:\Program Files\Microsoft SQL Server\130\LocalDB\Binn  --------- (a hely változhat, de ezt a mappát kell keresni)
+
 SQLLocalDB.exe create v13 13.0 -s
 
 * ------------------------------------------------------------------------------------------------------------- *
