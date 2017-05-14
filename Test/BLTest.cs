@@ -37,22 +37,35 @@
         }
 
         [Test]
-        public void LoginEllenorzesTest()
+        public void LoginCheckTest()
         {
-            bool result = this.l.LoginEllenorzes(this.m.Object, "Valaki", "asd");
-            bool result2 = this.l.LoginEllenorzes(this.m.Object, "Val", "asd");
-            Assert.That(result, Is.EqualTo(true));
-            Assert.That(result2, Is.EqualTo(false));
+            bool result = this.l.LoginEllenorzes(this.m.Object, "Valaki", "asd");         
+            Assert.That(result, Is.EqualTo(true));            
+        }
+
+        [Test]
+        public void WrongLoginTest()
+        {
+            bool result = this.l.LoginEllenorzes(this.m.Object, "Val", "asd");
+            Assert.That(result, Is.EqualTo(false));
+        }
+
+
+
+        [Test]
+        public void WrongRegistrationCheckTest()
+        {
+            ATHLETE a = new ATHLETE() { NAME = "Valaki", ID = 10, BORN_DATE = new DateTime(2010, 12, 18) };           
+            Assert.That(this.l.RegistrationCheck(a, this.m.Object), Is.EqualTo(false));           
         }
 
         [Test]
         public void RegistrationCheckTest()
         {
-            ATHLETE a1 = new ATHLETE() { NAME = "Valaki", ID = 10, BORN_DATE = new DateTime(2010, 12, 18) };
-            ATHLETE a2 = new ATHLETE() { NAME = "Valak", ID = 10, BORN_DATE = new DateTime(2010, 12, 17) };
-            Assert.That(this.l.RegistrationCheck(a1, this.m.Object), Is.EqualTo(false));
-            Assert.That(this.l.RegistrationCheck(a2, this.m.Object), Is.EqualTo(true));
+            ATHLETE a = new ATHLETE() { NAME = "Valak", ID = 10, BORN_DATE = new DateTime(2010, 12, 17) };
+            Assert.That(this.l.RegistrationCheck(a, this.m.Object), Is.EqualTo(true));
         }
+
 
         [Test]
         public void ToObservableCollectionTest()

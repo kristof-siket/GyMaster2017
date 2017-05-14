@@ -12,7 +12,7 @@
         <ComboBox x:Name="cmb_Gyakorlat" HorizontalAlignment="Left" ItemsSource="{Binding SelectedAthleteExercises}" Margin="88,14,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.5,1.318"/>
         <Button Content="Kirajzol" Click="Kirajzol_Click" HorizontalAlignment="Left" Margin="289,487,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="-0.347,0"/>
         <Label Content="Gyakorlat:" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.184,0.308"/>
-        <Label Content="{Binding loggedInAthlete.NAME}" ContentStringFormat="Kék: {0}" HorizontalAlignment="Left" Margin="10,155,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding LoggedInAthlete.NAME}" ContentStringFormat="Kék: {0}" HorizontalAlignment="Left" Margin="10,155,0,0" VerticalAlignment="Top"/>
         <Label Content="{Binding SelectedAthlete.NAME}" ContentStringFormat="Piros: {0}" HorizontalAlignment="Left" Margin="10,185,0,0" VerticalAlignment="Top"/>
 
     </Grid>
